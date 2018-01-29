@@ -8,10 +8,15 @@ namespace NetCoreDI
     {
         readonly IServiceProvider _serviceProvider;
 
+        private static AmbientContext _current { get; set; }
+
         public AmbientContext(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
+            _current = this;
         }
+
+        public static AmbientContext Current => _current;
 
         public IUnitOfWork UnitOfWork => _serviceProvider.GetService<IUnitOfWork>();
 

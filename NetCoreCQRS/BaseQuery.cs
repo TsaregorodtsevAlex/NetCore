@@ -3,7 +3,7 @@ using NetCoreDI;
 
 namespace NetCoreCQRS
 {
-    public class BaseCommand
+    public class BaseQuery
     {
         private IUnitOfWork _unitOfWork;
 
