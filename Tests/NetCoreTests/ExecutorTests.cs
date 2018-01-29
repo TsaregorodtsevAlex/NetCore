@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace NetCoreTests
 {
+    [TestFixture]
     public class ExecutorTests: BaseTest
     {
         [Test]

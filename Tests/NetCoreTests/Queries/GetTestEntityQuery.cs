@@ -10,7 +10,7 @@ namespace NetCoreTests.Queries
         public List<TestEntity> Execute()
         {
             var testRepository = Uow.GetRepository<TestEntity>();
-            return Enumerable.ToList<TestEntity>(testRepository.GetAll());
+            return testRepository.GetAll().ToList();
         }
     }
 }
