@@ -26,7 +26,6 @@ namespace NetCoreTests
                 .AddScoped<BaseDbContext, TestDbContext>()
                 .AddTransient<IExecutor, Executor>()
                 .AddTransient<IAmbientContext, AmbientContext>()
-                .AddTransient(context => new AmbientContext(ServiceProvider))
                 .AddTransient<IUnitOfWork, UnitOfWork>()
                 .AddTransient<IObjectResolver, ObjectResolver>();
 
@@ -34,6 +33,7 @@ namespace NetCoreTests
             AddQueriesToServiceCollection();
 
             ServiceProvider = ServiceCollection.BuildServiceProvider();
+            var _ = new AmbientContext(ServiceProvider);
         }
 
         private void AddCommandsToServiceCollection()
