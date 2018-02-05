@@ -27,7 +27,8 @@ namespace NetCoreTests
                 .AddTransient<IExecutor, Executor>()
                 .AddTransient<IAmbientContext, AmbientContext>()
                 .AddTransient(context => new AmbientContext(ServiceProvider))
-                .AddTransient<IUnitOfWork, UnitOfWork>();
+                .AddTransient<IUnitOfWork, UnitOfWork>()
+                .AddTransient<IObjectResolver, ObjectResolver>();
 
             AddCommandsToServiceCollection();
             AddQueriesToServiceCollection();

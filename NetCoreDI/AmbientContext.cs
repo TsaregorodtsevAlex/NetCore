@@ -19,10 +19,6 @@ namespace NetCoreDI
         public static AmbientContext Current => _current;
 
         public IUnitOfWork UnitOfWork => _serviceProvider.GetService<IUnitOfWork>();
-
-        public TObject ResolveObject<TObject>()
-        {
-            return _serviceProvider.GetService<TObject>();
-        }
+        public IObjectResolver Resolver => _serviceProvider.GetService<IObjectResolver>();
     }
 }
