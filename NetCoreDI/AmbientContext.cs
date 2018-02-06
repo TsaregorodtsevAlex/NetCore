@@ -6,9 +6,9 @@ namespace NetCoreDI
 {
     public class AmbientContext : IAmbientContext
     {
-        readonly IServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
 
-        private static AmbientContext _current { get; set; }
+        private static AmbientContext _current;
 
         public AmbientContext(IServiceProvider serviceProvider)
         {
