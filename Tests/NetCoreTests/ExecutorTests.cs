@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreCQRS;
 using NetCoreTests.Commands;
@@ -21,6 +22,16 @@ namespace NetCoreTests
             executor.Should().NotBeNull();
             testEntities.Should().NotBeNull();
             testEntities.Count.Should().BeGreaterThan(0);
+        }
+
+        [Test]
+        public async Task Executor_ProcessCommandAsync_CorrectProcess()
+        {
+            var executor = ServiceProvider.GetService<IExecutor>();
+
+            var testEntityId = await executor.GetCommand<CreateTestEntityCommandAsync>().Process(command => command.ExecuteAsync());
+
+            testEntityId.Should().BePositive();
         }
     }
 }

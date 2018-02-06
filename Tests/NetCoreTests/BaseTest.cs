@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreCQRS;
 using NetCoreDataAccess;
@@ -22,7 +23,8 @@ namespace NetCoreTests
         {
             ServiceCollection = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
-                .AddDbContext<TestDbContext>(opt => opt.UseInMemoryDatabase("Add_writes_to_database"))
+                .AddDbContext<TestDbContext>(opt => opt.UseInMemoryDatabase("Add_writes_to_database")
+                    .ConfigureWarnings(config=>config.Ignore(InMemoryEventId.TransactionIgnoredWarning)))
                 .AddScoped<BaseDbContext, TestDbContext>()
                 .AddTransient<IExecutor, Executor>()
                 .AddTransient<IAmbientContext, AmbientContext>()
@@ -38,7 +40,9 @@ namespace NetCoreTests
 
         private void AddCommandsToServiceCollection()
         {
-            ServiceCollection.AddTransient<CreateTestEntityCommand>();
+            ServiceCollection
+                .AddTransient<CreateTestEntityCommand>()
+                .AddTransient<CreateTestEntityCommandAsync>();
         }
 
         private void AddQueriesToServiceCollection()
