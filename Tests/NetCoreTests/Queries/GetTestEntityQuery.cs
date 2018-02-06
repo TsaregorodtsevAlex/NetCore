@@ -5,7 +5,7 @@ using NetCoreTests.DbDataAccess;
 
 namespace NetCoreTests.Queries
 {
-    public class GetTestEntityQuery : BaseCommand
+    public class GetTestEntityQuery : BaseQuery
     {
         public List<TestEntity> Execute()
         {
