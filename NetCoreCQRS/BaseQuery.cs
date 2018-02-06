@@ -7,6 +7,6 @@ namespace NetCoreCQRS
     {
         private IUnitOfWork _unitOfWork;
 
-        protected IUnitOfWork Uow => _unitOfWork ?? AmbientContext.Current.UnitOfWork;
+        protected IUnitOfWork Uow => _unitOfWork ?? (_unitOfWork = AmbientContext.Current.UnitOfWork);
     }
 }
