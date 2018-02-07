@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".tests", ".tests", "{CF4C52
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreTests", "Tests\NetCoreTests\NetCoreTests.csproj", "{DA606C63-C018-48D8-A414-66373AE101DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreDataBus", "NetCoreDataBus\NetCoreDataBus.csproj", "{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,18 @@ Global
 		{DA606C63-C018-48D8-A414-66373AE101DD}.Release|x64.Build.0 = Release|Any CPU
 		{DA606C63-C018-48D8-A414-66373AE101DD}.Release|x86.ActiveCfg = Release|Any CPU
 		{DA606C63-C018-48D8-A414-66373AE101DD}.Release|x86.Build.0 = Release|Any CPU
+		{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}.Debug|x64.Build.0 = Debug|Any CPU
+		{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}.Debug|x86.Build.0 = Debug|Any CPU
+		{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}.Release|x64.ActiveCfg = Release|Any CPU
+		{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}.Release|x64.Build.0 = Release|Any CPU
+		{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}.Release|x86.ActiveCfg = Release|Any CPU
+		{DCF8FC4E-FB1F-4924-A0BA-9F32EEE05DA2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

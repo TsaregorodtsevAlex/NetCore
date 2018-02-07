@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NetCoreCQRS;
 using NetCoreDataAccess;
 using NetCoreDataAccess.UnitOfWork;
+using NetCoreDataBus;
 using NetCoreDI;
 using NetCoreTests.Commands;
 using NetCoreTests.DbDataAccess;
@@ -29,7 +30,8 @@ namespace NetCoreTests
                 .AddTransient<IExecutor, Executor>()
                 .AddTransient<IAmbientContext, AmbientContext>()
                 .AddTransient<IUnitOfWork, UnitOfWork>()
-                .AddTransient<IObjectResolver, ObjectResolver>();
+                .AddTransient<IObjectResolver, ObjectResolver>()
+                .AddDataBusConfiguration();
 
             AddCommandsToServiceCollection();
             AddQueriesToServiceCollection();
