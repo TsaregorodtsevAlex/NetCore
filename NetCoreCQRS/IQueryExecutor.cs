@@ -7,6 +7,6 @@ namespace NetCoreCQRS
     {
         TQueryResult Process<TQueryResult>(Func<TQuery, TQueryResult> queryFunc);
 
-        IEnumerable<TQueryRawResult> Process<TQueryResult, TQueryRawResult>(Func<TQuery, IEnumerable<TQueryResult>> queryFunc, Func<TQueryResult, TQueryRawResult> queryResultMapFunc);
+        IEnumerable<TMapResult> Process<TQueryResult, TMapResult>(Func<TQuery, IEnumerable<TQueryResult>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc);
     }
 }
