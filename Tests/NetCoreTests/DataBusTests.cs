@@ -11,9 +11,9 @@ namespace NetCoreTests
         [Test]
         public void Test()
         {
-            var bus = ServiceProvider.GetService<IBus>();
+            //var bus = ServiceProvider.GetService<IBus>();
 
-            bus.Publish(new YourMessage { Text = "Hi" });
+            //bus.Publish(new YourMessage { Text = "Hi" });
         }
     }
 }
