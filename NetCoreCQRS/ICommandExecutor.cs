@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 
 namespace NetCoreCQRS
 {
-    public interface ICommandExecutor<TCommand>
+    public interface ICommandExecutor<out TCommand>
     {
-        void Process(Action<TCommand> action);
-        TResult Process<TResult>(Func<TCommand, TResult> func);
-        Task<TResult> Process<TResult>(Func<TCommand, Task<TResult>> func);
+        void Process(Action<TCommand> commandAction);
+        TResult Process<TResult>(Func<TCommand, TResult> commandFunc);
+        Task<TResult> Process<TResult>(Func<TCommand, Task<TResult>> commandFunc);
 
         void ProcessWithTransaction(Action<TCommand> action);
-        TResult ProcessWithTransaction<TResult>(Func<TCommand, TResult> func);
-        Task<TResult> ProcessWithTransaction<TResult>(Func<TCommand, Task<TResult>> func);
+        TResult ProcessWithTransaction<TResult>(Func<TCommand, TResult> commandFunc);
+        Task<TResult> ProcessWithTransaction<TResult>(Func<TCommand, Task<TResult>> commandFunc);
     }
 }

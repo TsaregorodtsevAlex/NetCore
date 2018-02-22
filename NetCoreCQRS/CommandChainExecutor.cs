@@ -16,10 +16,10 @@ namespace NetCoreCQRS
             _commandsChain = new Dictionary<BaseCommand, Action<BaseCommand>>();
         }
 
-        public ICommandChainExecutor AddCommand<TCommand>(Action<TCommand> action) where TCommand : BaseCommand
+        public ICommandChainExecutor AddCommand<TCommand>(Action<TCommand> commandAction) where TCommand : BaseCommand
         {
             var command = AmbientContext.Current.Resolver.ResolveObject<TCommand>();
-            var act = new Action<BaseCommand>(o => action((TCommand)o));
+            var act = new Action<BaseCommand>(o => commandAction((TCommand)o));
             _commandsChain.Add(command, act);
             return this;
         }

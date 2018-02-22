@@ -17,19 +17,19 @@ namespace NetCoreCQRS
             _context = context;
         }
 
-        public void Process(Action<TCommand> action)
+        public void Process(Action<TCommand> commandAction)
         {
-            action(_command);
+            commandAction(_command);
         }
 
-        public TResult Process<TResult>(Func<TCommand, TResult> func)
+        public TResult Process<TResult>(Func<TCommand, TResult> commandFunc)
         {
-            return func(_command);
+            return commandFunc(_command);
         }
 
-        public async Task<TResult> Process<TResult>(Func<TCommand, Task<TResult>> func)
+        public async Task<TResult> Process<TResult>(Func<TCommand, Task<TResult>> commandFunc)
         {
-            return await func(_command);
+            return await commandFunc(_command);
         }
 
         public void ProcessWithTransaction(Action<TCommand> action)
@@ -50,14 +50,14 @@ namespace NetCoreCQRS
             }
         }
 
-        public TResult ProcessWithTransaction<TResult>(Func<TCommand, TResult> func)
+        public TResult ProcessWithTransaction<TResult>(Func<TCommand, TResult> commandFunc)
         {
             try
             {
                 TResult funcResult;
                 using (_transaction = _context.Database.BeginTransaction())
                 {
-                    funcResult = func(_command);
+                    funcResult = commandFunc(_command);
                     _transaction.Commit();
                 }
                 return funcResult;
@@ -70,14 +70,14 @@ namespace NetCoreCQRS
             }
         }
 
-        public async Task<TResult> ProcessWithTransaction<TResult>(Func<TCommand, Task<TResult>> func)
+        public async Task<TResult> ProcessWithTransaction<TResult>(Func<TCommand, Task<TResult>> commandFunc)
         {
             try
             {
                 TResult funcResult;
                 using (_transaction = _context.Database.BeginTransaction())
                 {
-                    funcResult = await func(_command);
+                    funcResult = await commandFunc(_command);
                     _transaction.Commit();
                 }
                 return funcResult;

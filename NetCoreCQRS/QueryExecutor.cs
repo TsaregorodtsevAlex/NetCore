@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NetCoreCQRS
 {
@@ -11,9 +13,14 @@ namespace NetCoreCQRS
             _query = query;
         }
 
-        public TQueryResult Process<TQueryResult>(Func<TQuery, TQueryResult> func)
+        public TQueryResult Process<TQueryResult>(Func<TQuery, TQueryResult> queryFunc)
         {
-            return func(_query);
+            return queryFunc(_query);
+        }
+
+        public IEnumerable<TQueryRawResult> Process<TQueryResult, TQueryRawResult>(Func<TQuery, IEnumerable<TQueryResult>> queryFunc, Func<TQueryResult, TQueryRawResult> queryResultMapFunc)
+        {
+            return queryFunc(_query).Select(queryResultMapFunc);
         }
     }
 
