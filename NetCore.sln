@@ -17,11 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreDataBus", "NetCoreDa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreDataCache", "NetCoreDataCache\NetCoreDataCache.csproj", "{9EEB9407-F724-497F-9B24-BD8ECC1E6B22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreHttpClient", "NetCoreHttpClient\NetCoreHttpClient.csproj", "{64F2FC7B-0DA3-4F9E-A04F-04B05625D4F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreHttpClient", "NetCoreHttpClient\NetCoreHttpClient.csproj", "{64F2FC7B-0DA3-4F9E-A04F-04B05625D4F7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".tests_netCoreHttpClient", ".tests_netCoreHttpClient", "{1324C86C-8609-4AD3-88FF-AC7E958B4CDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreHttpClient.Test.Api", "TestNetCoreHttpClient\NetCoreHttpClient.Test.Api\NetCoreHttpClient.Test.Api.csproj", "{19D5D0EB-BCC0-4B51-AAEA-901BA948B8AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreHttpClient.Test.Api", "TestNetCoreHttpClient\NetCoreHttpClient.Test.Api\NetCoreHttpClient.Test.Api.csproj", "{19D5D0EB-BCC0-4B51-AAEA-901BA948B8AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreDataAccessSpecification", "NetCoreDataAccessSpecification\NetCoreDataAccessSpecification.csproj", "{837DF079-D9FB-4B7B-A017-3BA60B90DF62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +131,18 @@ Global
 		{19D5D0EB-BCC0-4B51-AAEA-901BA948B8AD}.Release|x64.Build.0 = Release|Any CPU
 		{19D5D0EB-BCC0-4B51-AAEA-901BA948B8AD}.Release|x86.ActiveCfg = Release|Any CPU
 		{19D5D0EB-BCC0-4B51-AAEA-901BA948B8AD}.Release|x86.Build.0 = Release|Any CPU
+		{837DF079-D9FB-4B7B-A017-3BA60B90DF62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{837DF079-D9FB-4B7B-A017-3BA60B90DF62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{837DF079-D9FB-4B7B-A017-3BA60B90DF62}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{837DF079-D9FB-4B7B-A017-3BA60B90DF62}.Debug|x64.Build.0 = Debug|Any CPU
+		{837DF079-D9FB-4B7B-A017-3BA60B90DF62}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{837DF079-D9FB-4B7B-A017-3BA60B90DF62}.Debug|x86.Build.0 = Debug|Any CPU
+		{837DF079-D9FB-4B7B-A017-3BA60B90DF62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{837DF079-D9FB-4B7B-A017-3BA60B90DF62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{837DF079-D9FB-4B7B-A017-3BA60B90DF62}.Release|x64.ActiveCfg = Release|Any CPU
+		{837DF079-D9FB-4B7B-A017-3BA60B90DF62}.Release|x64.Build.0 = Release|Any CPU
+		{837DF079-D9FB-4B7B-A017-3BA60B90DF62}.Release|x86.ActiveCfg = Release|Any CPU
+		{837DF079-D9FB-4B7B-A017-3BA60B90DF62}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
