@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\NetCoreCQRS\NetCoreCQRS.csproj" />
+    <ProjectReference Include="..\..\NetCoreDataAccessSpecification\NetCoreDataAccessSpecification.csproj" />
     <ProjectReference Include="..\..\NetCoreDataAccess\NetCoreDataAccess.csproj" />
     <ProjectReference Include="..\..\NetCoreDataBus\NetCoreDataBus.csproj" />
     <ProjectReference Include="..\..\NetCoreDI\NetCoreDI.csproj" />

@@ -5,10 +5,10 @@ namespace NetCoreTests.Commands
 {
     public class CreateTestEntityCommand: BaseCommand
     {
-        public void Execute()
+        public void Execute(TestEntity testEntity)
         {
             var testRepository = Uow.GetRepository<TestEntity>();
-            testRepository.Create(TestEntity.Default);
+            testRepository.Create(testEntity);
             Uow.SaveChanges();
         }
     }

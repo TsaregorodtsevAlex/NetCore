@@ -8,6 +8,11 @@ namespace NetCoreTests.DbDataAccess
         public string Message { get; set; }
 
         [NotMapped]
-        public static TestEntity Default => new TestEntity { Message = "Defautl message" };
+        public static TestEntity Default => new TestEntity { Message = "Default message" };
+
+        public static TestEntity Constuct(string message)
+        {
+            return new TestEntity { Message = message };
+        }
     }
 }

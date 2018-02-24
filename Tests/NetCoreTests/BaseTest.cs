@@ -9,6 +9,7 @@ using NetCoreDI;
 using NetCoreTests.Commands;
 using NetCoreTests.DbDataAccess;
 using NetCoreTests.Queries;
+using NetCoreTests.Specifications;
 using NUnit.Framework;
 
 namespace NetCoreTests
@@ -25,13 +26,13 @@ namespace NetCoreTests
             ServiceCollection = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
                 .AddDbContext<TestDbContext>(opt => opt.UseInMemoryDatabase("Add_writes_to_database")
-                    .ConfigureWarnings(config=>config.Ignore(InMemoryEventId.TransactionIgnoredWarning)))
+                    .ConfigureWarnings(config => config.Ignore(InMemoryEventId.TransactionIgnoredWarning)))
                 .AddScoped<BaseDbContext, TestDbContext>()
                 .AddTransient<IExecutor, Executor>()
                 .AddTransient<IAmbientContext, AmbientContext>()
                 .AddTransient<IUnitOfWork, UnitOfWork>()
-                .AddTransient<IObjectResolver, ObjectResolver>()
-                .AddDataBusConfiguration();
+                .AddTransient<IObjectResolver, ObjectResolver>();
+            //.AddDataBusConfiguration();
 
             AddCommandsToServiceCollection();
             AddQueriesToServiceCollection();
@@ -44,12 +45,26 @@ namespace NetCoreTests
         {
             ServiceCollection
                 .AddTransient<CreateTestEntityCommand>()
-                .AddTransient<CreateTestEntityCommandAsync>();
+                .AddTransient<CreateTestEntityCommandAsync>()
+                .AddTransient<DeleteAllTestEntitiesCommand>();
         }
 
         private void AddQueriesToServiceCollection()
         {
-            ServiceCollection.AddTransient<GetTestEntityQuery>();
+            ServiceCollection
+                .AddTransient<GetTestEntityQuery>()
+                .AddTransient<GetTestEntityWithMessageEqualThirdQuery>();
+        }
+
+        public IExecutor GetExecutor()
+        {
+            return ServiceProvider.GetService<IExecutor>();
+        }
+
+        public void ClearInMemotyDb()
+        {
+            var executor = GetExecutor();
+            executor.GetCommand<DeleteAllTestEntitiesCommand>().Process(c => c.Execute());
         }
     }
 }
