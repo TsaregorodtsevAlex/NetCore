@@ -1,16 +1,15 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
-using NetCoreCQRS;
 using NetCoreTests.Commands;
 using NetCoreTests.DbDataAccess;
+using NetCoreTests.Handlers;
 using NetCoreTests.Queries;
 using NUnit.Framework;
 
 namespace NetCoreTests
 {
     [TestFixture]
-    public class ExecutorTests: BaseTest
+    public class ExecutorTests : BaseTest
     {
         [Test]
         public void Executor_AddAndGetTestEntity_ReturnExistedTestEntities_Success()
@@ -33,6 +32,16 @@ namespace NetCoreTests
             var testEntityId = await executor.GetCommand<CreateTestEntityCommandAsync>().Process(command => command.ExecuteAsync());
 
             testEntityId.Should().BePositive();
+        }
+
+        [Test]
+        public void Executor_GetSumOfTwoNumbersHandler_ReturnSum_Success()
+        {
+            var executor = GetExecutor();
+
+            var sum = executor.GetHandler<GetSumOfTwoNumbersHandler>().Process(h => h.Handle(1, 2));
+
+            sum.Should().Be(3);
         }
     }
 }

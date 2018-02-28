@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using NetCoreCQRS;
+using NetCoreCQRS.Commands;
 using NetCoreTests.DbDataAccess;
 
 namespace NetCoreTests.Commands

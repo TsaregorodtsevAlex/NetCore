@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NetCoreCQRS
+namespace NetCoreCQRS.Queries
 {
     public class QueryExecutor<TQuery> : IQueryExecutor<TQuery>
     {
@@ -26,8 +26,8 @@ namespace NetCoreCQRS
 
         public async ValueTask<IEnumerable<TMapResult>> ProcessAsync<TQueryResult, TMapResult>(Func<TQuery, ValueTask<IEnumerable<TQueryResult>>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc)
         {
-            var queryResult = await queryFunc(_query);
-            return queryResult.Select(queryResultMapFunc);
+            var queryResults = await queryFunc(_query);
+            return queryResults.Select(queryResultMapFunc);
         }
     }
 

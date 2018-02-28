@@ -8,6 +8,7 @@ using NetCoreDataBus;
 using NetCoreDI;
 using NetCoreTests.Commands;
 using NetCoreTests.DbDataAccess;
+using NetCoreTests.Handlers;
 using NetCoreTests.Queries;
 using NetCoreTests.Specifications;
 using NUnit.Framework;
@@ -36,6 +37,7 @@ namespace NetCoreTests
 
             AddCommandsToServiceCollection();
             AddQueriesToServiceCollection();
+            AddHandlersToServiceCollection();
 
             ServiceProvider = ServiceCollection.BuildServiceProvider();
             var _ = new AmbientContext(ServiceProvider);
@@ -54,6 +56,12 @@ namespace NetCoreTests
             ServiceCollection
                 .AddTransient<GetTestEntityQuery>()
                 .AddTransient<GetTestEntityWithMessageEqualThirdQuery>();
+        }
+
+        private void AddHandlersToServiceCollection()
+        {
+            ServiceCollection
+                .AddTransient<GetSumOfTwoNumbersHandler>();
         }
 
         public IExecutor GetExecutor()

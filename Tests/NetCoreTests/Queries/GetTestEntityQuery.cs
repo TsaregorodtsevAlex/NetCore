@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NetCoreCQRS;
+using NetCoreCQRS.Queries;
 using NetCoreTests.DbDataAccess;
 
 namespace NetCoreTests.Queries

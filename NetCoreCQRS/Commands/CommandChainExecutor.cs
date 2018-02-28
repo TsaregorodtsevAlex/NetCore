@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NetCoreDataAccess;
 using NetCoreDI;
 
-namespace NetCoreCQRS
+namespace NetCoreCQRS.Commands
 {
     public class CommandChainExecutor : ICommandChainExecutor
     {

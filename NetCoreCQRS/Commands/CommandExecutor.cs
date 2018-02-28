@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
 using NetCoreDataAccess;
 
-namespace NetCoreCQRS
+namespace NetCoreCQRS.Commands
 {
     public class CommandExecutor<TCommand> : ICommandExecutor<TCommand>
     {

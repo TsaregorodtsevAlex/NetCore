@@ -1,4 +1,7 @@
-﻿using NetCoreDataAccess;
+﻿using NetCoreCQRS.Commands;
+using NetCoreCQRS.Handlers;
+using NetCoreCQRS.Queries;
+using NetCoreDataAccess;
 using NetCoreDI;
 
 namespace NetCoreCQRS
@@ -27,6 +30,12 @@ namespace NetCoreCQRS
         public ICommandChainExecutor CommandChain()
         {
             return new CommandChainExecutor(_context);
+        }
+
+        public IHandlerExecutor<THandler> GetHandler<THandler>()
+        {
+            var handler = AmbientContext.Current.Resolver.ResolveObject<THandler>();
+            return new HandlerExecutor<THandler>(handler);
         }
     }
 }

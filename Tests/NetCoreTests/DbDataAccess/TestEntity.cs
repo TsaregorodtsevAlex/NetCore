@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using NetCoreDataAccess.Interfaces;
 
 namespace NetCoreTests.DbDataAccess
 {
-    public class TestEntity
+    public class TestEntity: IEntity
     {
         public int Id { get; set; }
         public string Message { get; set; }

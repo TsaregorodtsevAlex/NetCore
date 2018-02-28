@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace NetCoreCQRS
+namespace NetCoreCQRS.Commands
 {
     public interface ICommandExecutor<out TCommand>
     {

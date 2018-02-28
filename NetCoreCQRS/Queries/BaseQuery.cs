@@ -1,9 +1,9 @@
 ﻿using NetCoreDataAccess.UnitOfWork;
 using NetCoreDI;
 
-namespace NetCoreCQRS
+namespace NetCoreCQRS.Queries
 {
-    public class BaseCommand
+    public class BaseQuery
     {
         private IUnitOfWork _unitOfWork;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace NetCoreCQRS
+namespace NetCoreCQRS.Queries
 {
     public interface IQueryExecutor<out TQuery>
     {

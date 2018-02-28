@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetCoreCQRS
+namespace NetCoreCQRS.Commands
 {
     public interface ICommandChainExecutor
     {
