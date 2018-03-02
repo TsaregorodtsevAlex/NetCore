@@ -28,7 +28,7 @@ namespace NetCoreTests
                 .AddEntityFrameworkInMemoryDatabase()
                 .AddDbContext<TestDbContext>(opt => opt.UseInMemoryDatabase("Add_writes_to_database")
                     .ConfigureWarnings(config => config.Ignore(InMemoryEventId.TransactionIgnoredWarning)))
-                .AddScoped<BaseDbContext, TestDbContext>()
+                .AddScoped<DbContext, TestDbContext>()
                 .AddTransient<IExecutor, Executor>()
                 .AddTransient<IAmbientContext, AmbientContext>()
                 .AddTransient<IUnitOfWork, UnitOfWork>()

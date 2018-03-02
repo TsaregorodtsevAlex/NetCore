@@ -1,13 +1,14 @@
 ﻿using NetCoreDataAccess.Repository;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace NetCoreDataAccess.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly BaseDbContext _context;
+        private readonly DbContext _context;
 
-        public UnitOfWork(BaseDbContext context)
+        public UnitOfWork(DbContext context)
         {
             _context = context;
         }

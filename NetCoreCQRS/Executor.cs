@@ -1,16 +1,16 @@
-﻿using NetCoreCQRS.Commands;
+﻿using Microsoft.EntityFrameworkCore;
+using NetCoreCQRS.Commands;
 using NetCoreCQRS.Handlers;
 using NetCoreCQRS.Queries;
-using NetCoreDataAccess;
 using NetCoreDI;
 
 namespace NetCoreCQRS
 {
     public class Executor : IExecutor
     {
-        private readonly BaseDbContext _context;
+        private readonly DbContext _context;
 
-        public Executor(BaseDbContext context)
+        public Executor(DbContext context)
         {
             _context = context;
         }

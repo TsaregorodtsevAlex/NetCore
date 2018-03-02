@@ -3,7 +3,7 @@ using NetCoreDataAccess;
 
 namespace NetCoreTests.DbDataAccess
 {
-    public class TestDbContext : BaseDbContext
+    public class TestDbContext : DbContext
     {
         public TestDbContext(DbContextOptions options) : base(options)
         {

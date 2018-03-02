@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using NetCoreDataAccess;
+using Microsoft.EntityFrameworkCore;
 using NetCoreDI;
 
 namespace NetCoreCQRS.Commands
 {
     public class CommandChainExecutor : ICommandChainExecutor
     {
-        readonly BaseDbContext _context;
+        readonly DbContext _context;
         private readonly Dictionary<BaseCommand, Action<BaseCommand>> _commandsChain;
 
-        public CommandChainExecutor(BaseDbContext context)
+        public CommandChainExecutor(DbContext context)
         {
             _context = context;
             _commandsChain = new Dictionary<BaseCommand, Action<BaseCommand>>();
@@ -19,7 +19,7 @@ namespace NetCoreCQRS.Commands
         public ICommandChainExecutor AddCommand<TCommand>(Action<TCommand> commandAction) where TCommand : BaseCommand
         {
             var command = AmbientContext.Current.Resolver.ResolveObject<TCommand>();
-            var act = new Action<BaseCommand>(o => commandAction((TCommand)o));
+            var act = new Action<BaseCommand>(o => commandAction((TCommand) o));
             _commandsChain.Add(command, act);
             return this;
         }

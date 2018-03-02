@@ -6,11 +6,11 @@ namespace NetCoreDataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly BaseDbContext _context;
+        private readonly DbContext _context;
 
         private DbSet<T> DbSet => _context.Set<T>();
 
-        public Repository(BaseDbContext context)
+        public Repository(DbContext context)
         {
             _context = context;
         }

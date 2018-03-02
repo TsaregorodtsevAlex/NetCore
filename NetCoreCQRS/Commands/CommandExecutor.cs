@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using NetCoreDataAccess;
 
 namespace NetCoreCQRS.Commands
 {
     public class CommandExecutor<TCommand> : ICommandExecutor<TCommand>
     {
         readonly TCommand _command;
-        readonly BaseDbContext _context;
+        readonly DbContext _context;
         IDbContextTransaction _transaction;
 
-        public CommandExecutor(TCommand command, BaseDbContext context)
+        public CommandExecutor(TCommand command, DbContext context)
         {
             _command = command;
             _context = context;
