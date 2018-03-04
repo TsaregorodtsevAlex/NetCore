@@ -47,12 +47,12 @@ namespace NetCoreDataAccess.Repository
             await DbSet.AddAsync(item);
         }
 
-        public void CreateRange(List<T> item)
+        public void CreateRange(IEnumerable<T> item)
         {
             DbSet.AddRange(item);
         }
 
-        public async Task CreateRangeAsync(List<T> item)
+        public async Task CreateRangeAsync(IEnumerable<T> item)
         {
             await DbSet.AddRangeAsync(item);
         }
@@ -70,6 +70,11 @@ namespace NetCoreDataAccess.Repository
         public void Update(T item)
         {
             DbSet.Update(item);
+        }
+
+        public void UpdateRange(IEnumerable<T>item)
+        {
+            DbSet.UpdateRange(item);
         }
     }
 }
