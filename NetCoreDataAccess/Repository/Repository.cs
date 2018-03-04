@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace NetCoreDataAccess.Repository
@@ -20,6 +21,11 @@ namespace NetCoreDataAccess.Repository
             return DbSet.Find(keyValue);
         }
 
+        public async Task<T> GetByIdAsync(object keyValue)
+        {
+            return await DbSet.FindAsync(keyValue);
+        }
+
         public IEnumerable<T> GetAll()
         {
             IQueryable<T> query = DbSet;
@@ -36,9 +42,19 @@ namespace NetCoreDataAccess.Repository
             DbSet.Add(item);
         }
 
+        public async Task CreateAsync(T item)
+        {
+            await DbSet.AddAsync(item);
+        }
+
         public void Delete(T item)
         {
             DbSet.Remove(item);
+        }
+
+        public void DeleteRange(IEnumerable<T> items)
+        {
+            DbSet.RemoveRange(items);
         }
 
         public void Update(T item)
