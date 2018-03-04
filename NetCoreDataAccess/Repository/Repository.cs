@@ -47,6 +47,16 @@ namespace NetCoreDataAccess.Repository
             await DbSet.AddAsync(item);
         }
 
+        public void CreateRange(List<T> item)
+        {
+            DbSet.AddRange(item);
+        }
+
+        public async Task CreateRangeAsync(List<T> item)
+        {
+            await DbSet.AddRangeAsync(item);
+        }
+
         public void Delete(T item)
         {
             DbSet.Remove(item);

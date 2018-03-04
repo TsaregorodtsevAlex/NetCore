@@ -15,6 +15,9 @@ namespace NetCoreDataAccess.Repository
         void Create(T item);
         Task CreateAsync(T item);
 
+        void CreateRange(List<T> item);
+        Task CreateRangeAsync(List<T> item);
+
         void Update(T item);
         void Delete(T item);
         void DeleteRange(IEnumerable<T> items);
