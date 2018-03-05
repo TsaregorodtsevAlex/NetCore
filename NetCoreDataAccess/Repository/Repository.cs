@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -72,7 +73,7 @@ namespace NetCoreDataAccess.Repository
             DbSet.Update(item);
         }
 
-        public void UpdateRange(IEnumerable<T>item)
+        public void UpdateRange(IEnumerable<T> item)
         {
             DbSet.UpdateRange(item);
         }

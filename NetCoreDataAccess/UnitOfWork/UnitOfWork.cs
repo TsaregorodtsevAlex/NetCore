@@ -1,5 +1,6 @@
 ﻿using NetCoreDataAccess.Repository;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,12 @@ namespace NetCoreDataAccess.UnitOfWork
         public Repository<T> GetRepository<T>() where T : class
         {
             var repository = new Repository<T>(_context);
+            return repository;
+        }
+
+        public CommonRepository GetRepository()
+        {
+            var repository = new CommonRepository(_context);
             return repository;
         }
 

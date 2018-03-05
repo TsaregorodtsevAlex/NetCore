@@ -43,5 +43,14 @@ namespace NetCoreTests
 
             sum.Should().Be(3);
         }
+
+        [Test]
+        public void Executor_CommonRepository_Success()
+        {
+            var executor = GetExecutor();
+            var testEntity = executor.GetQuery<GetTestEntityFirstByEntityNameQuery>().Process(q => q.Execute(nameof(TestEntity)));
+            testEntity.Should().NotBeNull();
+            testEntity.Id.Should().BeGreaterThan(0);
+        }
     }
 }

@@ -55,7 +55,8 @@ namespace NetCoreTests
         {
             ServiceCollection
                 .AddTransient<GetTestEntityQuery>()
-                .AddTransient<GetTestEntityWithMessageEqualThirdQuery>();
+                .AddTransient<GetTestEntityWithMessageEqualThirdQuery>()
+                .AddTransient<GetTestEntityFirstByEntityNameQuery>();
         }
 
         private void AddHandlersToServiceCollection()
