@@ -11,6 +11,6 @@ namespace NetCoreCQRS.Commands
 
         void ProcessWithTransaction(Action<TCommand> action);
         TResult ProcessWithTransaction<TResult>(Func<TCommand, TResult> commandFunc);
-        Task<TResult> ProcessWithTransaction<TResult>(Func<TCommand, Task<TResult>> commandFunc);
+        Task<TResult> ProcessWithTransactionAsync<TResult>(Func<TCommand, Task<TResult>> commandFunc);
     }
 }

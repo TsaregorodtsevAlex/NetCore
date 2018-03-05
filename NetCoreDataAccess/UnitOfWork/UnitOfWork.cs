@@ -1,5 +1,6 @@
 ﻿using NetCoreDataAccess.Repository;
 using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace NetCoreDataAccess.UnitOfWork
@@ -22,6 +23,11 @@ namespace NetCoreDataAccess.UnitOfWork
         public void SaveChanges()
         {
             _context.SaveChanges();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
 
         private bool _disposed;

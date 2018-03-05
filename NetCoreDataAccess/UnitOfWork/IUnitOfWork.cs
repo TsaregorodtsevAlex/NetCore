@@ -1,4 +1,5 @@
-﻿using NetCoreDataAccess.Repository;
+﻿using System.Threading.Tasks;
+using NetCoreDataAccess.Repository;
 
 namespace NetCoreDataAccess.UnitOfWork
 {
@@ -6,5 +7,6 @@ namespace NetCoreDataAccess.UnitOfWork
     {
         Repository<T> GetRepository<T>() where T : class;
         void SaveChanges();
+        Task SaveChangesAsync();
     }
 }

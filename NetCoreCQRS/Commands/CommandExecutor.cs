@@ -70,7 +70,7 @@ namespace NetCoreCQRS.Commands
             }
         }
 
-        public async Task<TResult> ProcessWithTransaction<TResult>(Func<TCommand, Task<TResult>> commandFunc)
+        public async Task<TResult> ProcessWithTransactionAsync<TResult>(Func<TCommand, Task<TResult>> commandFunc)
         {
             try
             {

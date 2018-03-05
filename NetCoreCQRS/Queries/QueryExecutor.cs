@@ -24,6 +24,12 @@ namespace NetCoreCQRS.Queries
             return queryFunc(_query).Select(queryResultMapFunc);
         }
 
+        public async ValueTask<TQueryResult> ProcessAsync<TQueryResult>(Func<TQuery, ValueTask<TQueryResult>> queryFunc)
+        {
+            var queryResults = await queryFunc(_query);
+            return queryResults;
+        }
+
         public async ValueTask<IEnumerable<TMapResult>> ProcessAsync<TQueryResult, TMapResult>(Func<TQuery, ValueTask<IEnumerable<TQueryResult>>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc)
         {
             var queryResults = await queryFunc(_query);
