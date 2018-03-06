@@ -8,8 +8,10 @@ namespace NetCoreCQRS.Queries
     {
         TQueryResult Process<TQueryResult>(Func<TQuery, TQueryResult> queryFunc);
 
-        IEnumerable<TMapResult> Process<TQueryResult, TMapResult>(Func<TQuery, IEnumerable<TQueryResult>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc);
+        IEnumerable<TMapResult> Process<TQueryResult, TMapResult>(Func<TQuery, ICollection<TQueryResult>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc);
 
-        ValueTask<IEnumerable<TMapResult>> ProcessAsync<TQueryResult, TMapResult>(Func<TQuery, ValueTask<IEnumerable<TQueryResult>>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc);
+        ValueTask<TQueryResult> Process<TQueryResult>(Func<TQuery, ValueTask<TQueryResult>> queryFunc);
+
+        ValueTask<IEnumerable<TMapResult>> Process<TQueryResult, TMapResult>(Func<TQuery, ValueTask<ICollection<TQueryResult>>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc);
     }
 }

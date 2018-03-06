@@ -19,18 +19,18 @@ namespace NetCoreCQRS.Queries
             return queryFunc(_query);
         }
 
-        public IEnumerable<TMapResult> Process<TQueryResult, TMapResult>(Func<TQuery, IEnumerable<TQueryResult>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc)
+        public IEnumerable<TMapResult> Process<TQueryResult, TMapResult>(Func<TQuery, ICollection<TQueryResult>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc)
         {
             return queryFunc(_query).Select(queryResultMapFunc);
         }
 
-        public async ValueTask<TQueryResult> ProcessAsync<TQueryResult>(Func<TQuery, ValueTask<TQueryResult>> queryFunc)
+        public async ValueTask<TQueryResult> Process<TQueryResult>(Func<TQuery, ValueTask<TQueryResult>> queryFunc)
         {
             var queryResults = await queryFunc(_query);
             return queryResults;
         }
 
-        public async ValueTask<IEnumerable<TMapResult>> ProcessAsync<TQueryResult, TMapResult>(Func<TQuery, ValueTask<IEnumerable<TQueryResult>>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc)
+        public async ValueTask<IEnumerable<TMapResult>> Process<TQueryResult, TMapResult>(Func<TQuery, ValueTask<ICollection<TQueryResult>>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc)
         {
             var queryResults = await queryFunc(_query);
             return queryResults.Select(queryResultMapFunc);
