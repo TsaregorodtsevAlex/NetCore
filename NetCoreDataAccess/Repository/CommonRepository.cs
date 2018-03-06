@@ -50,5 +50,10 @@ namespace NetCoreDataAccess.Repository
         {
             _context.Remove(entity);
         }
+
+        public IQueryable<T> AsQueriable<T>(T entity) where T : class
+        {
+           return  _context.Set<T>();
+        }
     }
 }

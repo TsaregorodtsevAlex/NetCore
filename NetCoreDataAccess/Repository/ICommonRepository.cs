@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NetCoreDataAccess.Repository
@@ -12,5 +13,6 @@ namespace NetCoreDataAccess.Repository
         Task CreateAsync<T>(T entity) where T : class;
         void Update<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
+        IQueryable<T> AsQueriable<T>(T entity) where T : class;
     }
 }
