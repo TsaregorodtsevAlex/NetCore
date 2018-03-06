@@ -9,7 +9,7 @@ namespace NetCoreTests.Queries
     {
         public TestEntity Execute(string entityName)
         {
-            var commonRepository = Uow.GetRepository(entityName);
+            var commonRepository = Uow.GetRepository();
             var entityClrType = commonRepository.GetEntityClrType(entityName);
             dynamic entity = Activator.CreateInstance(entityClrType);
             commonRepository.Create(entity);
