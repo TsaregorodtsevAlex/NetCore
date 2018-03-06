@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NetCoreCQRS.Queries;
 using NetCoreTests.DbDataAccess;
 
@@ -8,11 +9,15 @@ namespace NetCoreTests.Queries
     {
         public TestEntity Execute(string entityName)
         {
-            var commonRepository = Uow.GetRepository();
+            var commonRepository = Uow.GetRepository(entityName);
             var entityClrType = commonRepository.GetEntityClrType(entityName);
-            var entity = Activator.CreateInstance(entityClrType);
+            dynamic entity = Activator.CreateInstance(entityClrType);
             commonRepository.Create(entity);
             Uow.SaveChanges();
+
+
+            var res = commonRepository.AsQueriable(entity);
+
             return (TestEntity)entity;
         }
     }
