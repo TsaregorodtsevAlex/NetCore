@@ -28,12 +28,12 @@ namespace NetCoreDataAccess.Repository
 
         public T GetById<T>(T entity, object key) where T : class
         {
-            return _context.Find<T>(typeof(T), key);
+            return _context.Find<T>(key);
         }
 
         public async Task<T> GetByIdAsync<T>(T entity, object key) where T : class
         {
-            return await _context.FindAsync<T>(typeof(T), key);
+            return await _context.FindAsync<T>(key);
         }
 
         public async Task CreateAsync<T>(T entity) where T : class
