@@ -14,6 +14,11 @@ namespace NetCoreCQRS.Handlers
             _handler = handler;
         }
 
+        public void Process<THandlerResult>(Action<THandler> handlerAction)
+        {
+            handlerAction(_handler);
+        }
+
         public THandlerResult Process<THandlerResult>(Func<THandler, THandlerResult> handlerFunc)
         {
             return handlerFunc(_handler);
