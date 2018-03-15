@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using NetCoreDataAccess.Interfaces;
 
 namespace NetCoreDataAccess.Repository
 {
@@ -40,21 +41,25 @@ namespace NetCoreDataAccess.Repository
 
         public void Create(T item)
         {
+            SetCreatedData(item);
             DbSet.Add(item);
         }
 
         public async Task CreateAsync(T item)
         {
+            SetCreatedData(item);
             await DbSet.AddAsync(item);
         }
 
         public void CreateRange(IEnumerable<T> item)
         {
+            SetCreatedData(item);
             DbSet.AddRange(item);
         }
 
         public async Task CreateRangeAsync(IEnumerable<T> item)
         {
+            SetCreatedData(item);
             await DbSet.AddRangeAsync(item);
         }
 
@@ -70,12 +75,48 @@ namespace NetCoreDataAccess.Repository
 
         public void Update(T item)
         {
+            SetModifaedData(item);
             DbSet.Update(item);
         }
 
         public void UpdateRange(IEnumerable<T> item)
         {
+            SetModifaedData(item);
             DbSet.UpdateRange(item);
+        }
+
+        private void SetCreatedData(IEnumerable<T> items)
+        {
+            foreach (var item in items.Where(r => r is ICreateEntityAudit))
+            {
+                ((ICreateEntityAudit)item).DateCreate = DateTimeOffset.Now;
+                SetModifaedData(item);
+            }
+        }
+
+        private void SetCreatedData(T item)
+        {
+            if (item is ICreateEntityAudit)
+            {
+                ((ICreateEntityAudit)item).DateCreate = DateTimeOffset.Now;
+                SetModifaedData(item);
+            }
+        }
+
+        private void SetModifaedData(IEnumerable<T> items)
+        {
+            foreach (var item in items.Where(r => r is IModifyEntityAudit))
+            {
+                ((IModifyEntityAudit)item).DateUpdate = DateTimeOffset.Now;
+            }
+        }
+
+        private void SetModifaedData(T item)
+        {
+            if (item is IModifyEntityAudit)
+            {
+                ((IModifyEntityAudit)item).DateUpdate = DateTimeOffset.Now;
+            }
         }
     }
 }

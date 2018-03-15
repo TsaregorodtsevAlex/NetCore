@@ -1,6 +1,9 @@
-﻿namespace NetCoreDataAccess.Interfaces
+﻿using System;
+
+namespace NetCoreDataAccess.Interfaces
 {
     public interface ICreateEntityAudit
     {
+        DateTimeOffset DateCreate { get; set; }
     }
 }
