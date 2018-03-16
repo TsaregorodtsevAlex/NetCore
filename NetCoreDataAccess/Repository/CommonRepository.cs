@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using NetCoreDataAccess.Interfaces;
 
 namespace NetCoreDataAccess.Repository
 {
@@ -23,6 +24,7 @@ namespace NetCoreDataAccess.Repository
 
         public void Create<T>(T entity) where T : class
         {
+            SetCreatedData(entity);
             _context.Add(entity);
         }
 
@@ -38,11 +40,13 @@ namespace NetCoreDataAccess.Repository
 
         public async Task CreateAsync<T>(T entity) where T : class
         {
+            SetCreatedData(entity);
             await _context.AddAsync(entity);
         }
 
         public void Update<T>(T entity) where T : class
         {
+            SetModifaedData(entity);
             _context.Update(entity);
         }
 
@@ -54,6 +58,23 @@ namespace NetCoreDataAccess.Repository
         public IQueryable<T> AsQueriable<T>(T entity) where T : class
         {
            return  _context.Set<T>();
+        }
+        
+        private void SetCreatedData<T>(T item) where T : class
+        {
+            if (item is ICreateEntityAudit)
+            {
+                ((ICreateEntityAudit)item).DateCreate = DateTimeOffset.Now;
+                SetModifaedData(item);
+            }
+        }
+
+        private void SetModifaedData<T>(T item) where T : class
+        {
+            if (item is IModifyEntityAudit)
+            {
+                ((IModifyEntityAudit)item).DateUpdate = DateTimeOffset.Now;
+            }
         }
     }
 }
