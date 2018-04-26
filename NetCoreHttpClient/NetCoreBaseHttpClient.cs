@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace NetCoreHttpClient
 {
-    public class NetCoreHttpClient
+    public class NetCoreBaseHttpClient
     {
         private const string HttpClientMediaType = "application/json";
 
@@ -15,7 +15,7 @@ namespace NetCoreHttpClient
 
         private string _httpClientBaseAddress;
 
-        public NetCoreHttpClient(IHttpContextAccessor httpContextAccessor)
+        public NetCoreBaseHttpClient(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
             _httpClient = new HttpClient();
