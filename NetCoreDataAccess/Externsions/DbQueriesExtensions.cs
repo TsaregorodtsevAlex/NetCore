@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Linq.Dynamic.Core;
+using NetCoreDataAccess.BaseRequests;
+using NetCoreDataAccess.BaseResponses;
 using NetCoreDataAccessSpecification;
 
 namespace NetCoreDataAccess.Externsions
@@ -28,6 +31,22 @@ namespace NetCoreDataAccess.Externsions
             {
                 return queryable.Where(filterExpression);
             }
+
+            return queryable;
+        }
+
+        public static IQueryable<T> ApplyPagedListRequest<T>(this IQueryable<T> queryable, PagedListRequest pagedListRequest, ListResponseBase listResponse)
+        {
+            if (pagedListRequest.HasSortings)
+            {
+                queryable = queryable.OrderBy(pagedListRequest.SortingAsSqlQueryString);
+            }
+
+            queryable = queryable
+                .Skip(pagedListRequest.Skip)
+                .Take(pagedListRequest.Take);
+
+            listResponse.TotalCount = queryable.Count();
 
             return queryable;
         }

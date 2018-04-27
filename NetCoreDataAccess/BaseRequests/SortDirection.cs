@@ -1,4 +1,4 @@
-﻿namespace NetCoreCQRS.BaseRequests
+﻿namespace NetCoreDataAccess.BaseRequests
 {
     public enum SortDirection
     {

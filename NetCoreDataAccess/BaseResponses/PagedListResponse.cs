@@ -1,4 +1,4 @@
-﻿namespace NetCoreCQRS.BaseResponses
+﻿namespace NetCoreDataAccess.BaseResponses
 {
     public class PagedListResponse<TItem> : ListResponseBase
     {
