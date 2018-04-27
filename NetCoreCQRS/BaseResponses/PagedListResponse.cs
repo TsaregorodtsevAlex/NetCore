@@ -1,14 +1,8 @@
 ﻿namespace NetCoreCQRS.BaseResponses
 {
-    public class PagedListResponse
-    {
-        public int DisplayFrom { get; set; }
-        public int DisplayTo { get; set; }
-    }
-
-    public class PagedListResponse<TItem> : PagedListResponse
+    public class PagedListResponse<TItem> 
     {
         public TItem[] Items { get; set; }
-        public int SelectedCount { get; protected set; }
+        public int TotalCount { get; protected set; }
     }
 }
