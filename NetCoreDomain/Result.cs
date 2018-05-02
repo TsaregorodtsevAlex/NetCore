@@ -12,7 +12,7 @@ namespace NetCoreDomain
         {
             if (isSuccess && string.IsNullOrEmpty(error) == false)
             {
-                throw  new InvalidOperationException();
+                throw new InvalidOperationException();
             }
 
             if (isSuccess == false && string.IsNullOrEmpty(error))
@@ -33,8 +33,6 @@ namespace NetCoreDomain
         {
             return new Result(false, failMessage);
         }
-
-
     }
 
     public class Result<T> : Result
@@ -57,6 +55,16 @@ namespace NetCoreDomain
         public Result(T value, bool isSuccess, string error) : base(isSuccess, error)
         {
             _value = value;
+        }
+
+        public static Result<T> Ok(T resultValue)
+        {
+            return new Result<T>(resultValue, true, string.Empty);
+        }
+
+        public static Result<T> Fail(T resultValue, string errorMessage)
+        {
+            return new Result<T>(resultValue, false, errorMessage);
         }
     }
 }
