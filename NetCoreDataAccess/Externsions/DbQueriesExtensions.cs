@@ -37,6 +37,8 @@ namespace NetCoreDataAccess.Externsions
 
         public static IQueryable<T> ApplyPagedListRequest<T>(this IQueryable<T> queryable, PagedListRequest pagedListRequest, ListResponseBase listResponse)
         {
+            listResponse.TotalCount = queryable.Count();
+
             if (pagedListRequest.HasSortings)
             {
                 queryable = queryable.OrderBy(pagedListRequest.SortingAsSqlQueryString);
@@ -45,8 +47,6 @@ namespace NetCoreDataAccess.Externsions
             queryable = queryable
                 .Skip(pagedListRequest.Skip)
                 .Take(pagedListRequest.Take);
-
-            listResponse.TotalCount = queryable.Count();
 
             return queryable;
         }
