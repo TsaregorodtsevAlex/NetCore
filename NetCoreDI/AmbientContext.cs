@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreDataAccess.UnitOfWork;
+using NetCoreLocalization;
 
 namespace NetCoreDI
 {
@@ -19,6 +20,7 @@ namespace NetCoreDI
         public static AmbientContext Current => _current;
 
         public IUnitOfWork UnitOfWork => _serviceProvider.GetService<IUnitOfWork>();
+        public ILocalizationService Localization => _serviceProvider.GetService<ILocalizationService>();
         public IObjectResolver Resolver => _serviceProvider.GetService<IObjectResolver>();
     }
 }
