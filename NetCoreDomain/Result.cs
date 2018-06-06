@@ -37,24 +37,11 @@ namespace NetCoreDomain
 
     public class Result<T> : Result
     {
-        private readonly T _value;
-
-        public T Value
-        {
-            get
-            {
-                if (IsFailure)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                return _value;
-            }
-        }
+        public T Value { get; }
 
         public Result(T value, bool isSuccess, string error) : base(isSuccess, error)
         {
-            _value = value;
+            Value = value;
         }
 
         public static Result<T> Ok(T resultValue)
