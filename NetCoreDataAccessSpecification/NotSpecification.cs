@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 namespace NetCoreDataAccessSpecification
 {
     public class NotSpecification<TEntity> : Specification<TEntity>
+        where TEntity : class, new()
     {
         private readonly Specification<TEntity> _specification;
 
