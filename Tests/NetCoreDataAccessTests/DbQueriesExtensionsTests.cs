@@ -105,7 +105,7 @@ namespace NetCoreDataAccessTests
 
         [Category("Method ApplyPagedListRequest")]
         [Test]
-        public void DbQueriesExtensions_ApplyPagedListRequestWithNullListResponseBase_ReturnsSuccess()
+        public void DbQueriesExtensions_ApplyPagedListRequestWithNullListResponseBase_ReturnsException()
         {
             IQueryable<SpectificationTestEntity> result = null;
             try
@@ -123,7 +123,7 @@ namespace NetCoreDataAccessTests
 
         [Category("Method ApplyPagedListRequest")]
         [Test]
-        public void DbQueriesExtensions_ApplyPagedListRequestWithNullPagedListRequest_ReturnsSuccess()
+        public void DbQueriesExtensions_ApplyPagedListRequestWithNullPagedListRequest_ReturnsException()
         {
             IQueryable<SpectificationTestEntity> result = null;
             try
@@ -197,7 +197,5 @@ namespace NetCoreDataAccessTests
 
             result.Should().HaveCount(shouldBeCount);
         }
-
-        //сортировка с пустым значением, null
     }
 }
