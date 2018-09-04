@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 namespace NetCoreDataAccessSpecification
 {
     public abstract class Specification<TEntity>
+        where TEntity: class, new()
     {
         public bool IsSatisfiedBy(TEntity entity)
         {
