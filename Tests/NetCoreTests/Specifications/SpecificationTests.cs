@@ -17,7 +17,7 @@ namespace NetCoreTests.Specifications
         [SetUp]
         public void Specifications_SetUp()
         {
-            ClearInMemotyDb();
+            ClearInMemoryDb();
 
             var executor = GetExecutor();
             var testEntities = new List<TestEntity>

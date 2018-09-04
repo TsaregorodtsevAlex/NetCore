@@ -15,7 +15,7 @@ namespace NetCoreTests.DbQueriesExtensions
         [SetUp]
         public void DbQueriesExtensions_SetUp()
         {
-            ClearInMemotyDb();
+            ClearInMemoryDb();
 
             var executor = GetExecutor();
             var testEntities = new List<TestEntity>
