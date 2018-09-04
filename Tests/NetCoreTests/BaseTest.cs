@@ -70,7 +70,7 @@ namespace NetCoreTests
             return ServiceProvider.GetService<IExecutor>();
         }
 
-        public void ClearInMemotyDb()
+        public void ClearInMemoryDb()
         {
             var executor = GetExecutor();
             executor.GetCommand<DeleteAllTestEntitiesCommand>().Process(c => c.Execute());

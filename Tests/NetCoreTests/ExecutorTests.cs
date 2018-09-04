@@ -21,7 +21,7 @@ namespace NetCoreTests
 
             executor.Should().NotBeNull();
             testEntities.Should().NotBeNull();
-            testEntities.Count.Should().BeGreaterThan(0);
+            testEntities.Count.Should().BePositive();
         }
 
         [Test]
