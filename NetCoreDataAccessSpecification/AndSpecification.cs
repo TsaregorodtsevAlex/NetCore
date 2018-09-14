@@ -21,9 +21,9 @@ namespace NetCoreDataAccessSpecification
             var leftExpression = _leftSpecification.ToExpression();
             var rightExpression = _rightSpecification.ToExpression();
 
-            var andExpression = Expression.AndAlso(leftExpression.Body, rightExpression.Body);
+            var andExpression = Expression.AndAlso(leftExpression.Body, Expression.Invoke(rightExpression, leftExpression.Parameters.Single()));
 
-            return Expression.Lambda<Func<TEntity, bool>>(andExpression, leftExpression.Parameters.Single());
+            return Expression.Lambda<Func<TEntity, bool>>(andExpression, leftExpression.Parameters);
         }
     }
 }
