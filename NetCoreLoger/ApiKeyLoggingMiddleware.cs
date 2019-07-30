@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Serilog.Context;
 
-namespace NetCoreLog
+namespace NetCoreLoger
 {
     public class ApiKeyLoggingMiddleware
     {

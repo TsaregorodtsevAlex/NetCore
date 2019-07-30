@@ -3,7 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Serilog.Events;
 
-namespace NetCoreLog
+namespace NetCoreLoger
 {
     public class JsonLogEventPropertyValue : LogEventPropertyValue
     {

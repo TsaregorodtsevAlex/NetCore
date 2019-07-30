@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Serilog.Context;
 using Microsoft.AspNetCore.Http;
 
-namespace NetCoreLog
+namespace NetCoreLoger
 {
 	public class RequestLoggingMiddleware
 	{

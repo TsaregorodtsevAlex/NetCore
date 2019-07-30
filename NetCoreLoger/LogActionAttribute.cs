@@ -1,7 +1,7 @@
 ﻿using Serilog;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace NetCoreLog
+namespace NetCoreLoger
 {
     public class LogActionAttribute: ActionFilterAttribute
     {

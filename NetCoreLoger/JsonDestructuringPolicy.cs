@@ -1,7 +1,7 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace NetCoreLog
+namespace NetCoreLoger
 {
     public class JsonDestructuringPolicy : IDestructuringPolicy
     {

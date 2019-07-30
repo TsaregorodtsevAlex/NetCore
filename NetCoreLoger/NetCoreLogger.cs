@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
-namespace NetCoreLog
+namespace NetCoreLoger
 {
     public static class NetCoreLogger
     {

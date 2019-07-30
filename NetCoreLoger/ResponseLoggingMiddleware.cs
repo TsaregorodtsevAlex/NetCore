@@ -5,7 +5,7 @@ using Serilog;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 
-namespace NetCoreLog
+namespace NetCoreLoger
 {
 	public class ResponseLoggingMiddleware
 	{
