@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace NetCoreCQRS.Queries
 {
-    public class QueryExecutor<TQuery> : IQueryExecutor<TQuery>
+    public class QueryExecutor<TQuery> : IQueryExecutor<TQuery> where TQuery: BaseQuery
     {
-        private readonly TQuery _query;
+        private TQuery _query;
 
         public QueryExecutor(TQuery query)
         {
@@ -16,24 +16,35 @@ namespace NetCoreCQRS.Queries
 
         public TQueryResult Process<TQueryResult>(Func<TQuery, TQueryResult> queryFunc)
         {
-            return queryFunc(_query);
+            var result = queryFunc(_query);
+            _query.Clean();
+			_query = null;
+			return result;
         }
 
         public IEnumerable<TMapResult> Process<TQueryResult, TMapResult>(Func<TQuery, ICollection<TQueryResult>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc)
         {
-            return queryFunc(_query).Select(queryResultMapFunc);
+            var result = queryFunc(_query).Select(queryResultMapFunc);
+            _query.Clean();
+			_query = null;
+			return result;
         }
 
         public async ValueTask<TQueryResult> Process<TQueryResult>(Func<TQuery, ValueTask<TQueryResult>> queryFunc)
         {
             var queryResults = await queryFunc(_query);
-            return queryResults;
+            _query.Clean();
+			_query = null;
+			return queryResults;
         }
 
         public async ValueTask<IEnumerable<TMapResult>> Process<TQueryResult, TMapResult>(Func<TQuery, ValueTask<ICollection<TQueryResult>>> queryFunc, Func<TQueryResult, TMapResult> queryResultMapFunc)
         {
             var queryResults = await queryFunc(_query);
-            return queryResults.Select(queryResultMapFunc);
+            var result = queryResults.Select(queryResultMapFunc);
+            _query.Clean();
+			_query = null;
+            return result;
         }
     }
 

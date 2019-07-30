@@ -114,8 +114,7 @@ namespace NetCoreDataAccessTests
             }
             catch (Exception ex)
             {
-                ex.Should().BeAssignableTo<ArgumentNullException>();
-
+                ex.Should().BeAssignableTo<NullReferenceException>();
             }
 
             result.Should().BeNull();
@@ -132,7 +131,7 @@ namespace NetCoreDataAccessTests
             }
             catch (Exception ex)
             {
-                ex.Should().BeAssignableTo<ArgumentNullException>();
+                ex.Should().BeAssignableTo<NullReferenceException>();
 
             }
 

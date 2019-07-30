@@ -1,14 +1,13 @@
 ﻿using NetCoreDataAccess.Repository;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace NetCoreDataAccess.UnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
-        private readonly DbContext _context;
+        private  DbContext _context;
 
         public UnitOfWork(DbContext context)
         {
@@ -46,10 +45,7 @@ namespace NetCoreDataAccess.UnitOfWork
                 return;
             }
 
-            if (disposing)
-            {
-                _context.Dispose();
-            }
+            _context?.Dispose();
             _disposed = true;
         }
 
@@ -57,6 +53,11 @@ namespace NetCoreDataAccess.UnitOfWork
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        ~UnitOfWork()
+        {
+            Dispose(false);
         }
     }
 }

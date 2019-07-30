@@ -11,13 +11,11 @@ namespace NetCoreDataAccess.Externsions
     public static class DbQueriesExtensions
     {
         public static IQueryable<T> ApplySpecification<T>(this IQueryable<T> queryable, Specification<T> specification)
-        where T : class, new()
         {
             return queryable.Where(specification.ToExpression());
         }
 
         public static IQueryable<T> ApplySpecificationIf<T>(this IQueryable<T> queryable, Specification<T> specification, Func<bool> predicate)
-        where T : class, new()
         {
             if (predicate())
             {
@@ -39,16 +37,6 @@ namespace NetCoreDataAccess.Externsions
 
         public static IQueryable<T> ApplyPagedListRequest<T>(this IQueryable<T> queryable, PagedListRequest pagedListRequest, ListResponseBase listResponse)
         {
-            if (pagedListRequest == null)
-            {
-                throw new ArgumentNullException(typeof(PagedListRequest).Name);
-            }
-
-            if (listResponse == null)
-            {
-                throw new ArgumentNullException(typeof(ListResponseBase).Name);
-            }
-
             listResponse.TotalCount = queryable.Count();
 
             if (pagedListRequest.HasSortings)

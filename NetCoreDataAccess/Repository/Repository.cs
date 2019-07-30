@@ -34,6 +34,11 @@ namespace NetCoreDataAccess.Repository
             return query.AsEnumerable();
         }
 
+        public IQueryable<T> AsNoTracking()
+        {
+            return DbSet.AsNoTracking();
+        }
+
         public IQueryable<T> AsQueryable()
         {
             return DbSet;

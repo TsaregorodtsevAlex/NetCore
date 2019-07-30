@@ -8,5 +8,14 @@ namespace NetCoreCQRS.Queries
         private IUnitOfWork _unitOfWork;
 
         protected IUnitOfWork Uow => _unitOfWork ?? (_unitOfWork = AmbientContext.Current.UnitOfWork);
+
+        public void Clean()
+        {
+			if (_unitOfWork != null)
+			{
+				_unitOfWork.Dispose();
+				_unitOfWork = null;
+			}
+        }
     }
 }

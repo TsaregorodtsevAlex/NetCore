@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 namespace NetCoreDataAccessSpecification
 {
     public abstract class Specification<TEntity>
-        where TEntity: class, new()
     {
         public bool IsSatisfiedBy(TEntity entity)
         {
@@ -14,7 +13,7 @@ namespace NetCoreDataAccessSpecification
 
         public abstract Expression<Func<TEntity, bool>> ToExpression();
 
-        public Specification<TEntity> Add(Specification<TEntity> rightSpecification)
+        public Specification<TEntity> And(Specification<TEntity> rightSpecification)
         {
             return new AndSpecification<TEntity>(this, rightSpecification);
         }

@@ -11,6 +11,8 @@ namespace NetCoreDataAccess.Repository
         Task<T> GetByIdAsync(object keyValue);
 
         IEnumerable<T> GetAll();
+
+        IQueryable<T> AsNoTracking();
         IQueryable<T> AsQueryable();
 
         void Create(T item);

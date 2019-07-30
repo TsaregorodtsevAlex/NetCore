@@ -21,7 +21,7 @@ namespace NetCoreCQRS
             return new CommandExecutor<TCommand>(command, _context);
         }
 
-        public IQueryExecutor<TQuery> GetQuery<TQuery>()
+        public IQueryExecutor<TQuery> GetQuery<TQuery>() where TQuery: BaseQuery
         {
             var query = AmbientContext.Current.Resolver.ResolveObject<TQuery>();
             return new QueryExecutor<TQuery>(query);

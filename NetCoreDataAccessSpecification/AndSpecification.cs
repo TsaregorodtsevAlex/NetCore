@@ -4,8 +4,7 @@ using System.Linq.Expressions;
 
 namespace NetCoreDataAccessSpecification
 {
-    public class AndSpecification<TEntity> : Specification<TEntity>
-        where TEntity : class, new()
+    public class AndSpecification<TEntity>: Specification<TEntity>
     {
         private readonly Specification<TEntity> _leftSpecification;
         private readonly Specification<TEntity> _rightSpecification;

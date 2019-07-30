@@ -10,14 +10,8 @@
         {
             get
             {
-                var direction = Direction == SortDirection.Descending ? " DESC" : string.Empty;
-
-                if(string.IsNullOrEmpty(FieldName) || string.IsNullOrEmpty(FieldName.Trim()))
-                {
-                    return string.Empty;
-                }
-
-                return $"{FieldName}{direction}";
+                var direction = Direction == SortDirection.Descending ? "DESC" : string.Empty;
+                return $"{FieldName} {direction}";
             }
         }
     }
