@@ -39,7 +39,7 @@ namespace NetCoreDataBus
         public static IServiceCollection RegisterConsumerWithRetry<TConsumer, TContract>(this IServiceCollection serviceCollection, int retryCount, int intervalMin)
             where TConsumer : class, IConsumer, new() where TContract: class
         {
-            var queueName = $"{Assembly.GetAssembly(typeof(TConsumer)).GetName().FullName}_{typeof(TContract)}";
+            var queueName = $"{typeof(TConsumer).FullName}_{typeof(TContract)}";
 
             _host.ConnectReceiveEndpoint(queueName, cfg =>
                 {
@@ -63,7 +63,7 @@ namespace NetCoreDataBus
         public static IServiceCollection RegisterConsumer<TConsumer, TContract>(this IServiceCollection serviceCollection)
             where TConsumer : class, IConsumer, new()
         {
-            var queueName = $"{Assembly.GetAssembly(typeof(TConsumer)).GetName().FullName}_{typeof(TContract)}";
+            var queueName = $"{typeof(TConsumer).FullName}_{typeof(TContract)}";
 
             _host.ConnectReceiveEndpoint(queueName, cfg =>
             {
