@@ -1,0 +1,1 @@
+dotnet pack NetCoreApiKey.csproj -c Release
