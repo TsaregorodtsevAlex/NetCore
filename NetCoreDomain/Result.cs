@@ -54,6 +54,8 @@ namespace NetCoreDomain
     {
         public T Value { get; }
 
+        public bool HasValue => Value != null;
+
         public Result(T value, bool isSuccess, string error, object errorObject) : base(isSuccess, error, errorObject)
         {
             Value = value;
@@ -74,7 +76,7 @@ namespace NetCoreDomain
             return new Result<T>(resultValue, false, errorMessage, errorObject);
         }
 
-        public Result<TResult> ReturnFail<TResult>() where TResult: class
+        public Result<TResult> ReturnFail<TResult>() where TResult : class
         {
             return Result<TResult>.Fail(null, Error);
         }
