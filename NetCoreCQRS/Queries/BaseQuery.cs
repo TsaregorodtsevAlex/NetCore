@@ -11,11 +11,12 @@ namespace NetCoreCQRS.Queries
 
         public void Clean()
         {
-			if (_unitOfWork != null)
-			{
-				_unitOfWork.Dispose();
-				_unitOfWork = null;
-			}
+			// {a.kalinin} если использовать как scoped, то контекст оказывается уничтоженным
+			//if (_unitOfWork != null)
+			//{
+			//	_unitOfWork.Dispose();
+			//	_unitOfWork = null;
+			//}
         }
     }
 }
