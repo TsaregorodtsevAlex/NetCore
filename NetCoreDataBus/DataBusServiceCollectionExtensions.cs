@@ -36,7 +36,7 @@ namespace NetCoreDataBus
             return serviceCollection;
         }
 
-        public static IServiceCollection RegisterConsumerWithRetry<TConsumer, TContract>(this IServiceCollection serviceCollection, int retryCount, int intervalMin)
+        public static IServiceCollection RegisterConsumerWithRetry<TConsumer, TContract>(this IServiceCollection serviceCollection, int retryCount, int intervalMin, int concurrencyLimit = 0)
             where TConsumer : class, IConsumer, new() where TContract: class
         {
             var queueName = $"{typeof(TConsumer).FullName}_{typeof(TContract)}";
@@ -51,6 +51,12 @@ namespace NetCoreDataBus
                             });
 
                             x.Message<TContract>(m => m.UsePartitioner(1, context => context.MessageId.Value));
+
+                            if(concurrencyLimit > 0)
+                            {
+                                x.UseConcurrencyLimit(concurrencyLimit);
+                                x.UseConcurrentMessageLimit(concurrencyLimit);
+                            }
                         });
 
                     cfg.AutoDelete = false;
