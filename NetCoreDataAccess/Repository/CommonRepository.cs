@@ -64,7 +64,7 @@ namespace NetCoreDataAccess.Repository
         {
             if (item is ICreateEntityAudit)
             {
-                ((ICreateEntityAudit)item).DateCreate = DateTimeOffset.Now;
+                ((ICreateEntityAudit)item).CreateDate = DateTime.UtcNow;
                 SetModifaedData(item);
             }
         }
@@ -73,7 +73,7 @@ namespace NetCoreDataAccess.Repository
         {
             if (item is IModifyEntityAudit)
             {
-                ((IModifyEntityAudit)item).DateUpdate = DateTimeOffset.Now;
+                ((IModifyEntityAudit)item).UpdateDate = DateTime.UtcNow;
             }
         }
     }
