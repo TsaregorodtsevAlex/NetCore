@@ -15,10 +15,5 @@ namespace NetCoreLoger
                 .Enrich.WithProperty("version", Assembly.GetExecutingAssembly().GetName().Version)
                 .Enrich.WithProperty("module", moduleName);
         }
-
-        public static void CreateLogger(this LoggerConfiguration loggerConfiguration)
-        {
-            Log.Logger = loggerConfiguration.CreateLogger();
-        }
     }
 }
