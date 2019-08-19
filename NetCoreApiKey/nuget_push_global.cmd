@@ -1,1 +1,0 @@
-dotnet nuget push bin/Release/NetCoreApiKey.2.1.0.nupkg -k key -s https://api.nuget.org/v3/index.json
