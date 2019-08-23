@@ -9,7 +9,7 @@ namespace NetCoreDataBus
 		public static async Task<Guid> SendScheduledMessage<TMessage>(this IBus bus, TMessage message, DateTime scheduledTime)
 		{
 			
-			var sendResult =  await bus.ScheduleSend(new Uri($"rabbitmq://{bus.Address.Host}/{typeof(TMessage).Namespace}:{nameof(TMessage)}"), scheduledTime, message);
+			var sendResult =  await bus.ScheduleSend(new Uri($"rabbitmq://{bus.Address.Host}/{typeof(TMessage).Namespace}:{typeof(TMessage).Name}"), scheduledTime, message);
 			return sendResult.TokenId;
 		}
 

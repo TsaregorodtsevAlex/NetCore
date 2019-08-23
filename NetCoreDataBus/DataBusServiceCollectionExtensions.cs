@@ -18,14 +18,21 @@ namespace NetCoreDataBus
             var userName = configuration["RABBITMQ_USERNAME"];
             var password = configuration["RABBITMQ_PASSWORD"];
             var hostUrl = configuration["RABBITMQ_HOSTURL"];
+            var useQuartz = string.IsNullOrEmpty(configuration["RABBITMQ_QUARTZ_QUEUE_NAME"]) == false;
+            var quartzQueueName = configuration["RABBITMQ_QUARTZ_QUEUE_NAME"];
 
-            var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
+			var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
                 _host = cfg.Host(new Uri(hostUrl), h =>
                 {
                     h.Username(userName);
                     h.Password(password);
                 });
+
+                if (useQuartz)
+                {
+	                cfg.UseMessageScheduler(new Uri($"rabbitmq://{_host.Settings.Host}/{quartzQueueName}"));
+				}
             });
             serviceCollection.AddSingleton<IPublishEndpoint>(bus);
             serviceCollection.AddSingleton<ISendEndpointProvider>(bus);
