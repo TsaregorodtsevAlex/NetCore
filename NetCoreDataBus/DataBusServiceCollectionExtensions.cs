@@ -13,12 +13,15 @@ namespace NetCoreDataBus
     {
         private static IRabbitMqHost _host;
 
-        public static IServiceCollection AddDataBusConfiguration(this IServiceCollection serviceCollection, IConfiguration configuration)
-        {
-            var userName = configuration["RABBITMQ_USERNAME"];
+        private static bool _useQuartz;
+
+
+		public static IServiceCollection AddDataBusConfiguration(this IServiceCollection serviceCollection, IConfiguration configuration)
+		{
+			var userName = configuration["RABBITMQ_USERNAME"];
             var password = configuration["RABBITMQ_PASSWORD"];
             var hostUrl = configuration["RABBITMQ_HOSTURL"];
-            var useQuartz = string.IsNullOrEmpty(configuration["RABBITMQ_QUARTZ_QUEUE_NAME"]) == false;
+            _useQuartz = string.IsNullOrEmpty(configuration["RABBITMQ_QUARTZ_QUEUE_NAME"]) == false;
             var quartzQueueName = configuration["RABBITMQ_QUARTZ_QUEUE_NAME"];
 
 			var bus = Bus.Factory.CreateUsingRabbitMq(cfg =>
@@ -29,7 +32,7 @@ namespace NetCoreDataBus
                     h.Password(password);
                 });
 
-                if (useQuartz)
+                if (_useQuartz)
                 {
 	                cfg.UseMessageScheduler(new Uri($"rabbitmq://{_host.Settings.Host}/{quartzQueueName}"));
 				}
@@ -52,7 +55,15 @@ namespace NetCoreDataBus
                 {
                     cfg.Consumer<TConsumer>(x =>
                         {
-                            x.UseRetry(configurator =>
+	                        if (_useQuartz)
+	                        {
+		                        x.UseScheduledRedelivery(r => r.Intervals(TimeSpan.FromMinutes(5),
+			                        TimeSpan.FromMinutes(15), TimeSpan.FromMinutes(30), TimeSpan.FromMinutes(60),
+			                        TimeSpan.FromMinutes(120), TimeSpan.FromMinutes(240)));
+	                        }
+
+
+	                        x.UseMessageRetry(configurator =>
                             {
                                 configurator.Interval(retryCount, TimeSpan.FromMinutes(intervalMin));
                             });
