@@ -85,7 +85,46 @@ namespace NetCoreDataBus
             return serviceCollection;
         }
 
-        public static IServiceCollection RegisterConsumer<TConsumer, TContract>(this IServiceCollection serviceCollection)
+        public static IServiceProvider RegisterConsumerWithRetry<TConsumer, TContract>(this IServiceProvider serviceProvider, int retryCount, int intervalMin, int concurrencyLimit = 0)
+	        where TConsumer : class, IConsumer where TContract : class
+        {
+	        var queueName = $"{typeof(TConsumer).FullName}_{typeof(TContract)}";
+
+	        _host.ConnectReceiveEndpoint(queueName, cfg =>
+	        {
+		        cfg.Consumer<TConsumer>(serviceProvider.GetService<TConsumer>,x =>
+		        {
+			        if (_useQuartz)
+			        {
+				        x.UseScheduledRedelivery(r => r.Intervals(TimeSpan.FromMinutes(5),
+					        TimeSpan.FromMinutes(15), TimeSpan.FromMinutes(30), TimeSpan.FromMinutes(60),
+					        TimeSpan.FromMinutes(120), TimeSpan.FromMinutes(240)));
+			        }
+
+			        x.UseMessageRetry(configurator =>
+			        {
+				        configurator.Interval(retryCount, TimeSpan.FromMinutes(intervalMin));
+			        });
+
+			        if (concurrencyLimit > 0)
+			        {
+				        x.UseConcurrencyLimit(concurrencyLimit);
+				        x.UseConcurrentMessageLimit(concurrencyLimit);
+			        }
+			        else
+			        {
+				        x.Message<TContract>(m => m.UsePartitioner(1, context => context.MessageId.Value));
+			        }
+		        });
+
+		        cfg.AutoDelete = false;
+		        cfg.Durable = true;
+	        });
+
+	        return serviceProvider;
+        }
+
+		public static IServiceCollection RegisterConsumer<TConsumer, TContract>(this IServiceCollection serviceCollection)
             where TConsumer : class, IConsumer, new()
         {
             var queueName = $"{typeof(TConsumer).FullName}_{typeof(TContract)}";
