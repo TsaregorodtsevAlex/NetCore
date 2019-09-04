@@ -62,19 +62,20 @@ namespace NetCoreDataBus
 			                        TimeSpan.FromMinutes(120), TimeSpan.FromMinutes(240)));
 	                        }
 
-
 	                        x.UseMessageRetry(configurator =>
                             {
                                 configurator.Interval(retryCount, TimeSpan.FromMinutes(intervalMin));
                             });
 
-                            x.Message<TContract>(m => m.UsePartitioner(1, context => context.MessageId.Value));
-
-                            if(concurrencyLimit > 0)
+	                        if(concurrencyLimit > 0)
                             {
                                 x.UseConcurrencyLimit(concurrencyLimit);
                                 x.UseConcurrentMessageLimit(concurrencyLimit);
                             }
+                            else
+                            {
+	                            x.Message<TContract>(m => m.UsePartitioner(1, context => context.MessageId.Value));
+							}
                         });
 
                     cfg.AutoDelete = false;
