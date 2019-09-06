@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Reflection;
 using GreenPipes;
 using MassTransit;
 using MassTransit.RabbitMqTransport;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MassTransit.BusConfigurators;
 
 namespace NetCoreDataBus
 {
@@ -138,5 +136,19 @@ namespace NetCoreDataBus
 
             return serviceCollection;
         }
-    }
+
+
+		public static IServiceCollection RegisterDataBusPublisher(this IServiceCollection serviceCollection)
+		{
+			serviceCollection.AddSingleton<IBusPublisher, BusPublisher>();
+
+			return serviceCollection;
+		}
+		public static IServiceCollection RegisterDataBusPublisherStub(this IServiceCollection serviceCollection)
+		{
+			serviceCollection.AddSingleton<IBusPublisher, BusPublisherStub>();
+
+			return serviceCollection;
+		}
+	}
 }
