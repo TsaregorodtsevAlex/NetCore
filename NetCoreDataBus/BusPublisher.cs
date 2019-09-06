@@ -25,6 +25,8 @@ namespace NetCoreDataBus
 			catch (Exception ex)
 			{
 				Log.Error(ex, "An error occurred while publishing the event via publisher {Publisher}. Event: {Event}, Name: {EventName}", nameof(BusPublisher), message, typeof(T).Name);
+
+				throw;
 			}
 		}
 
@@ -39,6 +41,8 @@ namespace NetCoreDataBus
 			catch (Exception ex)
 			{
 				Log.Error(ex, "An error occurred while async publishing the event via publisher {Publisher}. Event: {Event}, Name: {EventName}", nameof(BusPublisher), message, typeof(T).Name);
+
+				throw;
 			}
 		}
 	}
