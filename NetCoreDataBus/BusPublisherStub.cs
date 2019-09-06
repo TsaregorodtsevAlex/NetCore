@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace NetCoreDataBus.BusPublisher
+namespace NetCoreDataBus
 {
 	public class BusPublisherStub : IBusPublisher
 	{
