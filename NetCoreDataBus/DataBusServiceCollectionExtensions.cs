@@ -1,6 +1,8 @@
 ﻿using System;
+using Automatonymous;
 using GreenPipes;
 using MassTransit;
+using MassTransit.EntityFrameworkCoreIntegration.Saga;
 using MassTransit.RabbitMqTransport;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -147,6 +149,22 @@ namespace NetCoreDataBus
 		public static IServiceCollection RegisterDataBusPublisherStub(this IServiceCollection serviceCollection)
 		{
 			serviceCollection.AddSingleton<IBusPublisher, BusPublisherStub>();
+
+			return serviceCollection;
+		}
+
+		public static IServiceCollection RegisterSaga<TStateMachineInstance>(this IServiceCollection serviceCollection,
+			MassTransitStateMachine<TStateMachineInstance> sagaStateMachine,
+			EntityFrameworkSagaRepository<TStateMachineInstance> sagaRepository) 			
+			where TStateMachineInstance : class, SagaStateMachineInstance, new()
+		{
+			var queueName = $"{typeof(TStateMachineInstance).FullName}";
+
+			_host.ConnectReceiveEndpoint(queueName, cfg =>
+			{
+				cfg.PrefetchCount = 1;
+				cfg.StateMachineSaga(sagaStateMachine, sagaRepository);
+			});
 
 			return serviceCollection;
 		}
