@@ -18,7 +18,7 @@ namespace NetCoreDataBus
 			await bus.CancelScheduledSend(tokenId);
 		}
 
-		public static async Task<ScheduledRecurringMessage> ScheduleRecurringMessage<TMessage, TRecurringSchedule>(this IBus bus, TRecurringSchedule recurringSchedule, TMessage message)
+		public static async Task<ScheduledRecurringMessage> ScheduleRecurringSend<TMessage, TRecurringSchedule>(this IBus bus, TRecurringSchedule recurringSchedule, TMessage message)
 			where TRecurringSchedule : DefaultRecurringSchedule
 		{
 			var scheduledRecurringMessage = await bus.ScheduleRecurringSend(new Uri($"rabbitmq://{bus.Address.Host}/{typeof(TMessage).Namespace}:{typeof(TMessage).Name}"), recurringSchedule, message);
