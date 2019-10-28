@@ -19,4 +19,14 @@ namespace NetCoreCQRS.Queries
 			//}
         }
     }
+
+    public class BaseQuery<TContext>
+    {
+	    public TContext Context;
+
+	    public void SetContext(TContext context)
+	    {
+		    Context = context;
+	    }
+    }
 }

@@ -11,4 +11,12 @@ namespace NetCoreCQRS
         ICommandChainExecutor CommandChain();
         IHandlerExecutor<THandler> GetHandler<THandler>();
     }
+
+    public interface IExecutor<TContext>
+    {
+	    IQueryExecutor<TQuery> GetQuery<TQuery>() where TQuery : BaseQuery<TContext>;
+	    ICommandExecutor<TCommand> GetCommand<TCommand>() where TCommand : BaseCommand<TContext>;
+		ICommandChainExecutor CommandChain();
+	    IHandlerExecutor<THandler> GetHandler<THandler>();
+    }
 }
