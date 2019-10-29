@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>2.2.2</Version>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>2.2.2.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,18 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.4.0" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetCoreDataAccess\NetCoreDataAccess.csproj" />
     <ProjectReference Include="..\NetCoreDI\NetCoreDI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Threading.Tasks.Extensions">
-      <HintPath>..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.0.0\ref\netcoreapp2.0\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
