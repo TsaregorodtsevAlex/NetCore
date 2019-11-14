@@ -80,7 +80,6 @@ namespace NetCoreDataAccess.Repository
 
         public void Update(T item)
         {
-	        _context.Entry(item).State = EntityState.Modified;
             SetModifaedData(item);
             DbSet.Update(item);
         }
