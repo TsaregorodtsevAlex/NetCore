@@ -24,7 +24,7 @@ namespace NetCoreCQRS.Integration.Test
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContextPool<NetCoreCQRSDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("NetCoreCQRSDB")), 10)
-				.AddTransient<DbContext, NetCoreCQRSDbContext>()
+				.AddTransient<NetCoreCQRSDbContext>()
 				.AddTransient<IExecutor<NetCoreCQRSDbContext>, Executor<NetCoreCQRSDbContext>>()
 				.AddTransient<IAmbientContext, AmbientContext>()
 				.AddTransient<IUnitOfWork, UnitOfWork>()
@@ -51,10 +51,10 @@ namespace NetCoreCQRS.Integration.Test
 
 			var _ = new AmbientContext(serviceProvider);
 
-			using (var db = _.Resolver.ResolveObject<NetCoreCQRSDbContext>())
-			{
+
+			var db = _.Resolver.ResolveObject<NetCoreCQRSDbContext>();
 				db.Database.Migrate();
-			}
+			
 
 			serviceProvider
 				.RegisterConsumerWithRetry<AddPointConsumer, IAddPointsEvent>(1, 1, 5);
