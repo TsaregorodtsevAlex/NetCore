@@ -3,6 +3,7 @@ using NetCoreCQRS.Commands;
 using NetCoreCQRS.Handlers;
 using NetCoreCQRS.Queries;
 using NetCoreDI;
+using System;
 
 namespace NetCoreCQRS
 {
@@ -44,22 +45,25 @@ namespace NetCoreCQRS
     public class Executor<TContext> : IExecutor<TContext> where TContext : DbContext
     {
 	    private readonly TContext _context;
+		IServiceProvider _provider;
 
-	    public Executor(TContext context)
+		public Executor(TContext context, IServiceProvider provider)
 	    {
 		    _context = context;
-	    }
+			_provider = provider;
+
+		}
 
 	    public ICommandExecutor<TCommand> GetCommand<TCommand>() where TCommand : BaseCommand<TContext>
 	    {
-		    var command = AmbientContext.Current.Resolver.ResolveObject<TCommand>();
+			var command = (TCommand)_provider.GetService(typeof(TCommand));
 			command.SetContext(_context);
 		    return new CommandExecutor<TCommand>(command, _context);
 	    }
 
 	    public IQueryExecutor<TQuery> GetQuery<TQuery>() where TQuery : BaseQuery<TContext>
 	    {
-		    var query = AmbientContext.Current.Resolver.ResolveObject<TQuery>();
+		    var query = Activator.CreateInstance<TQuery>();
 			query.SetContext(_context);
 		    return new QueryExecutor<TQuery>(query);
 	    }
@@ -71,8 +75,8 @@ namespace NetCoreCQRS
 
 	    public IHandlerExecutor<THandler> GetHandler<THandler>()
 	    {
-		    var handler = AmbientContext.Current.Resolver.ResolveObject<THandler>();
-		    return new HandlerExecutor<THandler>(handler);
+		    var handler = Activator.CreateInstance<THandler>();
+			return new HandlerExecutor<THandler>(handler);
 	    }
     }
 }
