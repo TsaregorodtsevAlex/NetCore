@@ -2,11 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <Version>4.0.0-rc1</Version>
+    <Version>4.0.0.5-rc2</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="5.5.6" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="5.5.6" />
     <PackageReference Include="MassTransit.Automatonymous" Version="5.5.6" />
     <PackageReference Include="MassTransit.EntityFrameworkCore" Version="5.5.6" />
     <PackageReference Include="MassTransit.Quartz" Version="5.5.6" />
