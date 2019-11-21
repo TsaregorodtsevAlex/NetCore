@@ -23,8 +23,8 @@ namespace NetCoreDataBus
 
 			var host = cfg.Host(new Uri(hostUrl), h =>
 			{
-				h.Username("guest");
-				h.Password("guest");
+				h.Username(userName);
+				h.Password(password);
 			});
 
 			if (_useQuartz)
