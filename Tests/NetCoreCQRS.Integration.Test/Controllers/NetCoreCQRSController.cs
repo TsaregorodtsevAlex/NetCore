@@ -19,7 +19,7 @@ namespace NetCoreCQRS.Integration.Test.Controllers
 		[Route("init")]
 		public async Task InitTest(int count)
 		{
-			for (int i = 0; i < 30; i++)
+			for (int i = 0; i < count; i++)
 			{
 				await _busPublisher.PublishAsync(new AddPointsEventDto { Count = count });
 			}

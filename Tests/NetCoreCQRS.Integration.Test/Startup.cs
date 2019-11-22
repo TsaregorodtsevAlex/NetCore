@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -32,9 +33,6 @@ namespace NetCoreCQRS.Integration.Test
 				.AddCQRSCommands()
 				.AddCQRSQueries();
 
-			services.AddDataBusConfiguration(Configuration)
-				.RegisterDataBusPublisher()
-				.RegisterConsumers();
 
 			services
 				.AddMvc()
@@ -45,14 +43,29 @@ namespace NetCoreCQRS.Integration.Test
 				c.SwaggerDoc("v1", new Info { Title = "NetCoreCQRS.Integration.Test", Version = "v1" });
 			});
 
-			var serviceProvider = services.BuildServiceProvider();
+			services.AddMassTransit(x =>
+			{
+				x.AddConsumer<AddPointConsumer>();
 
-			serviceProvider
-				.RegisterConsumerWithRetry<AddPointConsumer, IAddPointsEvent>(1, 1, 5);
+				x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+				{
+					cfg
+						.AddDataBusConfiguration(services, Configuration);
+					cfg
+						.RegisterConsumerWithRetry<AddPointConsumer, IAddPointsEvent>(provider, 1, 1, 1);
+				}));
+			});
+			services.RegisterDataBusPublisher();
+
+			services.AddSingleton<IPublishEndpoint>(provider => provider.GetRequiredService<IBusControl>());
+			services.AddSingleton<ISendEndpointProvider>(provider => provider.GetRequiredService<IBusControl>());
+			services.AddSingleton<IBus>(provider => provider.GetRequiredService<IBusControl>());
 		}
 
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider provider)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, IBusControl busControl, IServiceProvider provider)
 		{
+			busControl.Start();
+
 			provider.GetService<NetCoreCQRSDbContext>().Database.Migrate();
 
 			var swaggerBasePath = string.Empty;
