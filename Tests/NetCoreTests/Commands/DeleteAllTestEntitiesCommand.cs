@@ -7,7 +7,7 @@ namespace NetCoreTests.Commands
     {
         public void Execute()
         {
-            var testRepository = Uow.GetRepository<TestEntity>();
+            var testRepository = GetRepository<TestEntity>();
             var testEntities = testRepository.GetAll();
 
             foreach (var testEntity in testEntities)
@@ -15,7 +15,7 @@ namespace NetCoreTests.Commands
                 testRepository.Delete(testEntity);
             }
 
-            Uow.SaveChanges();
+            SaveChanges();
         }
     }
 }

@@ -7,9 +7,9 @@ namespace NetCoreTests.Commands
     {
         public void Execute(TestEntity testEntity)
         {
-            var testRepository = Uow.GetRepository<TestEntity>();
+            var testRepository = GetRepository<TestEntity>();
             testRepository.Create(testEntity);
-            Uow.SaveChanges();
+            SaveChanges();
         }
     }
 }
