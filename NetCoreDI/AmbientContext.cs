@@ -5,6 +5,7 @@ using NetCoreLocalization;
 
 namespace NetCoreDI
 {
+	[Obsolete("AmbientContext, заменен на использование IServiceProvider и больше не используется")]
     public class AmbientContext : IAmbientContext
     {
         private readonly IServiceProvider _serviceProvider;

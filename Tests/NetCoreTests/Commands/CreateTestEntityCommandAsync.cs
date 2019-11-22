@@ -8,10 +8,10 @@ namespace NetCoreTests.Commands
     {
         public async ValueTask<int> ExecuteAsync()
         {
-            var testRepository = Uow.GetRepository<TestEntity>();
+            var testRepository = GetRepository<TestEntity>();
             var testEntity = TestEntity.Default;
             testRepository.Create(testEntity);
-            Uow.SaveChanges();
+            SaveChanges();
             return await Task.FromResult(testEntity.Id);
         }
     }

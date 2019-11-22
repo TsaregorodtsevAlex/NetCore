@@ -10,8 +10,13 @@
         {
             get
             {
+				if(string.IsNullOrWhiteSpace(FieldName))
+				{
+					return string.Empty;
+				}
+
                 var direction = Direction == SortDirection.Descending ? "DESC" : string.Empty;
-                return $"{FieldName} {direction}";
+                return $"{FieldName} {direction}".Trim();
             }
         }
     }

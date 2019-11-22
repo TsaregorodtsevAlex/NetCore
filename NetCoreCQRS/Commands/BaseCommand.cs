@@ -1,22 +1,45 @@
-﻿using NetCoreDataAccess.UnitOfWork;
-using NetCoreDI;
+﻿using Microsoft.EntityFrameworkCore;
+using NetCoreDataAccess.Repository;
+using System.Threading.Tasks;
 
 namespace NetCoreCQRS.Commands
 {
-    public class BaseCommand
-    {
-        private IUnitOfWork _unitOfWork;
+	public class BaseCommand
+	{
+		DbContext Context;
+		public void SetContext(DbContext dbContext)
+		{
+			Context = dbContext;
+		}
 
-        protected IUnitOfWork Uow => _unitOfWork ?? (_unitOfWork = AmbientContext.Current.UnitOfWork);
-    }
+		public Repository<T> GetRepository<T>() where T : class
+		{
+			var repository = new Repository<T>(Context);
+			return repository;
+		}
+		public CommonRepository GetRepository()
+		{
+			var repository = new CommonRepository(Context);
+			return repository;
+		}
 
-    public class BaseCommand<TContext>
-    {
-	    public TContext Context;
+		public int SaveChanges()
+		{
+			return Context.SaveChanges();
+		}
+		public async Task<int> SaveChangesAsync()
+		{
+			return await Context.SaveChangesAsync();
+		}
+	}
 
-	    public void SetContext(TContext context)
-	    {
-		    Context = context;
-	    }
-    }
+	public class BaseCommand<TDbContext>
+	{
+		public TDbContext Context;
+
+		public void SetContext(TDbContext dbContext)
+		{
+			Context = dbContext;
+		}
+	}
 }

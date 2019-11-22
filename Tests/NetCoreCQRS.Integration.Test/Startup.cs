@@ -8,8 +8,8 @@ using NetCoreCQRS.Integration.Test.Consumers;
 using NetCoreCQRS.Integration.Test.Extensions;
 using NetCoreDataAccess.UnitOfWork;
 using NetCoreDataBus;
-using NetCoreDI;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 
 namespace NetCoreCQRS.Integration.Test
 {
@@ -26,9 +26,7 @@ namespace NetCoreCQRS.Integration.Test
 			services.AddDbContextPool<NetCoreCQRSDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("NetCoreCQRSDB")), 10)
 				.AddTransient<NetCoreCQRSDbContext>()
 				.AddTransient<IExecutor<NetCoreCQRSDbContext>, Executor<NetCoreCQRSDbContext>>()
-				.AddTransient<IAmbientContext, AmbientContext>()
-				.AddTransient<IUnitOfWork, UnitOfWork>()
-				.AddTransient<IObjectResolver, ObjectResolver>();
+				.AddTransient<IUnitOfWork, UnitOfWork>();
 
 			services
 				.AddCQRSCommands()
@@ -49,19 +47,14 @@ namespace NetCoreCQRS.Integration.Test
 
 			var serviceProvider = services.BuildServiceProvider();
 
-			var _ = new AmbientContext(serviceProvider);
-
-
-			var db = _.Resolver.ResolveObject<NetCoreCQRSDbContext>();
-				db.Database.Migrate();
-			
-
 			serviceProvider
 				.RegisterConsumerWithRetry<AddPointConsumer, IAddPointsEvent>(1, 1, 5);
 		}
 
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider provider)
 		{
+			provider.GetService<NetCoreCQRSDbContext>().Database.Migrate();
+
 			var swaggerBasePath = string.Empty;
 			if (env.IsDevelopment())
 			{

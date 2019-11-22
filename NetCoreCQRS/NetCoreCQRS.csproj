@@ -6,27 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="BaseRequests\**" />
-    <Compile Remove="BaseResponses\**" />
-    <EmbeddedResource Remove="BaseRequests\**" />
-    <EmbeddedResource Remove="BaseResponses\**" />
-    <None Remove="BaseRequests\**" />
-    <None Remove="BaseResponses\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NetCoreDataAccess\NetCoreDataAccess.csproj" />
-    <ProjectReference Include="..\NetCoreDI\NetCoreDI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Threading.Tasks.Extensions">
-      <HintPath>..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.0.0\ref\netcoreapp2.0\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
