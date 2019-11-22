@@ -8,6 +8,7 @@
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="5.5.5" />
     <PackageReference Include="MassTransit.Automatonymous" Version="5.5.5" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="5.5.5" />
     <PackageReference Include="MassTransit.EntityFrameworkCore" Version="5.5.5" />
     <PackageReference Include="MassTransit.Quartz" Version="5.5.5" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="5.5.5" />
