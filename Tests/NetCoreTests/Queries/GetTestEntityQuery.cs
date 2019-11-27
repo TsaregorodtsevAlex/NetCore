@@ -9,7 +9,7 @@ namespace NetCoreTests.Queries
     {
         public List<TestEntity> Execute()
         {
-            var testRepository = Uow.GetRepository<TestEntity>();
+            var testRepository = GetRepository<TestEntity>();
             return testRepository.GetAll().ToList();
         }
     }

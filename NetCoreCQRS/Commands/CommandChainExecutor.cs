@@ -1,46 +1,48 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using NetCoreDI;
 
 namespace NetCoreCQRS.Commands
 {
-    public class CommandChainExecutor : ICommandChainExecutor
-    {
-        readonly DbContext _context;
-        private readonly Dictionary<BaseCommand, Action<BaseCommand>> _commandsChain;
+	public class CommandChainExecutor : ICommandChainExecutor
+	{
+		readonly DbContext _context;
+		readonly Dictionary<BaseCommand, Action<BaseCommand>> _commandsChain;
+		readonly IServiceProvider _provider;
 
-        public CommandChainExecutor(DbContext context)
-        {
-            _context = context;
-            _commandsChain = new Dictionary<BaseCommand, Action<BaseCommand>>();
-        }
+		public CommandChainExecutor(DbContext context, IServiceProvider provider)
+		{
+			_context = context;
+			_provider = provider;
+			_commandsChain = new Dictionary<BaseCommand, Action<BaseCommand>>();
+		}
 
-        public ICommandChainExecutor AddCommand<TCommand>(Action<TCommand> commandAction) where TCommand : BaseCommand
-        {
-            var command = AmbientContext.Current.Resolver.ResolveObject<TCommand>();
-            var act = new Action<BaseCommand>(o => commandAction((TCommand) o));
-            _commandsChain.Add(command, act);
-            return this;
-        }
+		public ICommandChainExecutor AddCommand<TCommand>(Action<TCommand> commandAction) where TCommand : BaseCommand
+		{
+			var command = (TCommand)_provider.GetService(typeof(TCommand));
+			command.SetContext(_context);
+			var act = new Action<BaseCommand>(o => commandAction((TCommand)o));
+			_commandsChain.Add(command, act);
+			return this;
+		}
 
-        public void ExecuteAll()
-        {
-            foreach (var chainItem in _commandsChain)
-            {
-                var command = chainItem.Key;
-                var action = chainItem.Value;
-                action(command);
-            }
-        }
+		public void ExecuteAll()
+		{
+			foreach (var chainItem in _commandsChain)
+			{
+				var command = chainItem.Key;
+				var action = chainItem.Value;
+				action(command);
+			}
+		}
 
-        public void ExecuteAllWithTransaction()
-        {
-            using (var transaction = _context.Database.BeginTransaction())
-            {
-                ExecuteAll();
-                transaction.Commit();
-            }
-        }
-    }
+		public void ExecuteAllWithTransaction()
+		{
+			using (var transaction = _context.Database.BeginTransaction())
+			{
+				ExecuteAll();
+				transaction.Commit();
+			}
+		}
+	}
 }

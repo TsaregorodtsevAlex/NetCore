@@ -11,7 +11,7 @@ namespace NetCoreTests.DbQueriesExtensions
     {
         public List<string> Execute()
         {
-            var testEntityRepository = Uow.GetRepository<TestEntity>();
+            var testEntityRepository = GetRepository<TestEntity>();
             var testEntities = testEntityRepository
                 .AsQueryable()
                 .ApplySpecificationIf(new TestEntityMessageEqualsThirdMessageSpecification(), () => true)

@@ -1,24 +1,23 @@
-﻿using System;
-using System.Linq;
-using NetCoreCQRS.Queries;
+﻿using NetCoreCQRS.Commands;
 using NetCoreTests.DbDataAccess;
+using System;
 
 namespace NetCoreTests.Queries
 {
-    public class GetTestEntityFirstByEntityNameQuery: BaseQuery
-    {
-        public TestEntity Execute(string entityName)
-        {
-            var commonRepository = Uow.GetRepository();
-            var entityClrType = commonRepository.GetEntityClrType(entityName);
-            dynamic entity = Activator.CreateInstance(entityClrType);
-            commonRepository.Create(entity);
-            Uow.SaveChanges();
+	public class GetTestEntityFirstByEntityNameQuery : BaseCommand
+	{
+		public TestEntity Execute(string entityName)
+		{
+			var commonRepository = GetRepository();
+			var entityClrType = commonRepository.GetEntityClrType(entityName);
+			dynamic entity = Activator.CreateInstance(entityClrType);
+			commonRepository.Create(entity);
+			SaveChanges();
 
 
-            var res = commonRepository.AsQueriable(entity);
+			var res = commonRepository.AsQueriable(entity);
 
-            return (TestEntity)entity;
-        }
-    }
+			return (TestEntity)entity;
+		}
+	}
 }

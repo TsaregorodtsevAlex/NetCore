@@ -1,32 +1,34 @@
-﻿using NetCoreDataAccess.UnitOfWork;
-using NetCoreDI;
+﻿
+using Microsoft.EntityFrameworkCore;
+using NetCoreDataAccess.Repository;
 
 namespace NetCoreCQRS.Queries
 {
-    public class BaseQuery
-    {
-        private IUnitOfWork _unitOfWork;
+	public class BaseQuery
+	{
+		DbContext DbContext;
+		public void SetContext(DbContext dbContext)
+		{
+			DbContext = dbContext;
+		}
+		public Repository<T> GetRepository<T>() where T : class
+		{
+			var repository = new Repository<T>(DbContext);
+			return repository;
+		}
+		public CommonRepository GetRepository()
+		{
+			var repository = new CommonRepository(DbContext);
+			return repository;
+		}
+	}
 
-        protected IUnitOfWork Uow => _unitOfWork ?? (_unitOfWork = AmbientContext.Current.UnitOfWork);
-
-        public void Clean()
-        {
-			// {a.kalinin} если использовать как scoped, то контекст оказывается уничтоженным
-			//if (_unitOfWork != null)
-			//{
-			//	_unitOfWork.Dispose();
-			//	_unitOfWork = null;
-			//}
-        }
-    }
-
-    public class BaseQuery<TContext>
-    {
-	    public TContext Context;
-
-	    public void SetContext(TContext context)
-	    {
-		    Context = context;
-	    }
-    }
+	public class BaseQuery<TContext>
+	{
+		public TContext Context;
+		public void SetContext(TContext context)
+		{
+			Context = context;
+		}
+	}
 }

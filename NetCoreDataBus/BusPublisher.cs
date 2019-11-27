@@ -17,7 +17,7 @@ namespace NetCoreDataBus
 		public void Publish<T>(T message) where T : class
 		{
 			try
-			{				
+			{
 				Log.Information("Starting publishing the event {EventName} via publisher {Publisher}", typeof(T).Name, nameof(BusPublisher));
 				_bus.Publish(message);
 				Log.Information("Ending publishing the event {EventName} via publisher {Publisher}", typeof(T).Name, nameof(BusPublisher));
@@ -41,6 +41,34 @@ namespace NetCoreDataBus
 			catch (Exception ex)
 			{
 				Log.Error(ex, "An error occurred while async publishing the event via publisher {Publisher}. Event: {Event}, Name: {EventName}", nameof(BusPublisher), message, typeof(T).Name);
+
+				throw;
+			}
+		}
+
+		public async Task<Guid> SendScheduledMessageAsync<TMessage>(TMessage message, DateTime scheduledTime) where TMessage : class
+		{
+			try
+			{
+				return await _bus.SendScheduledMessage(message, scheduledTime);
+			}
+			catch (Exception ex)
+			{
+				Log.Error(ex, $"An error occurred while SendScheduledMessage the message: {message}, scheduledTime: {scheduledTime}");
+
+				throw;
+			}
+		}
+
+		public async Task CancelScheduledMessageAsync(Guid tokenId)
+		{
+			try
+			{
+				await _bus.CancelScheduledSend(tokenId);
+			}
+			catch (Exception ex)
+			{
+				Log.Error(ex, $"An error occurred while CancelScheduledSend the tokenId: {tokenId}");
 
 				throw;
 			}

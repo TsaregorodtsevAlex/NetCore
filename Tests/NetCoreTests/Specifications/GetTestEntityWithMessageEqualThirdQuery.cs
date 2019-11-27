@@ -10,7 +10,7 @@ namespace NetCoreTests.Specifications
 	{
 		public List<TestEntity> Execute()
 		{
-			var testEntityRepository = Uow.GetRepository<TestEntity>();
+			var testEntityRepository = GetRepository<TestEntity>();
 
 			var spec = GetSpecification();
 

@@ -13,7 +13,7 @@ namespace NetCoreDataBus
 	{
 		private static bool _useQuartz;
 
-		public static IRabbitMqBusFactoryConfigurator AddDataBusConfiguration(this IRabbitMqBusFactoryConfigurator cfg, IServiceCollection services, IConfiguration configuration)
+		public static IRabbitMqBusFactoryConfigurator AddDataBusConfiguration(this IRabbitMqBusFactoryConfigurator cfg, IConfiguration configuration)
 		{
 			var userName = configuration["RABBITMQ_USERNAME"];
 			var password = configuration["RABBITMQ_PASSWORD"];
@@ -31,10 +31,6 @@ namespace NetCoreDataBus
 			{
 				cfg.UseMessageScheduler(new Uri($"rabbitmq://{host.Settings.Host}/{quartzQueueName}"));
 			}
-
-			services.AddSingleton<IPublishEndpoint>(provider => provider.GetRequiredService<IBusControl>());
-			services.AddSingleton<ISendEndpointProvider>(provider => provider.GetRequiredService<IBusControl>());
-			services.AddSingleton<IBus>(provider => provider.GetRequiredService<IBusControl>());
 
 			return cfg;
 		}
