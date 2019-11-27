@@ -10,18 +10,18 @@ using Microsoft.Extensions.Logging;
 
 namespace NetCoreHttpClient.Test.Api
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            BuildWebHost(args).Run();
-        }
+	public class Program
+	{
+		public static void Main(string[] args)
+		{
+			BuildWebHost(args).Run();
+		}
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseIISIntegration()
-                .UseKestrel()
-                .UseStartup<Startup>()
-                .Build();
-    }
+		public static IWebHost BuildWebHost(string[] args) =>
+			WebHost.CreateDefaultBuilder(args)
+				.UseIISIntegration()
+				.UseKestrel()
+				.UseStartup<Startup>()
+				.Build();
+	}
 }
