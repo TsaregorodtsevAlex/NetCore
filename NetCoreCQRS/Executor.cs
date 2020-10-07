@@ -45,7 +45,7 @@ namespace NetCoreCQRS
 			var command = (TCommand)_provider.GetService(typeof(TCommand));
 			command.SetContext(_context);
 
-			return new CommandExecutor<TCommand>(command, _context);
+			return new CommandExecutor<TCommand>(command);
 		}
 
 		public IQueryExecutor<TQuery> GetQuery<TQuery>() where TQuery : BaseQuery
@@ -101,7 +101,7 @@ namespace NetCoreCQRS
 		{
 			var command = (TCommand)_provider.GetService(typeof(TCommand));
 			command.SetContext(_context);
-			return new CommandExecutor<TCommand>(command, _context);
+			return new CommandExecutor<TCommand>(command);
 		}
 
 		public IQueryExecutor<TQuery> GetQuery<TQuery>() where TQuery : BaseQuery<TContext>
