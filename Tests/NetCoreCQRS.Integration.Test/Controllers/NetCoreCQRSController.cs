@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using NetCoreCQRS.Integration.Test.Consumers;
 using NetCoreDataBus;
 using System.Threading.Tasks;
+using NetCoreCQRS.Integration.Test.CQRSCommands;
+using NetCoreCQRS.Integration.Test.Model;
 
 namespace NetCoreCQRS.Integration.Test.Controllers
 {
@@ -10,9 +13,13 @@ namespace NetCoreCQRS.Integration.Test.Controllers
 	public class NetCoreCQRSController : ControllerBase
 	{
 		readonly IBusPublisher _busPublisher;
-		public NetCoreCQRSController(IBusPublisher busPublisher)
+
+		readonly IExecutor<NetCoreCQRSDbContext> _executor;
+		
+		public NetCoreCQRSController(IBusPublisher busPublisher, IExecutor<NetCoreCQRSDbContext> executor)
 		{
 			_busPublisher = busPublisher;
+			_executor = executor;
 		}
 
 		[HttpPost]

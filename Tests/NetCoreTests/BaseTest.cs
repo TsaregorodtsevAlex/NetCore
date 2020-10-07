@@ -43,6 +43,7 @@ namespace NetCoreTests
 		{
 			ServiceCollection
 				.AddTransient<CreateTestEntityCommand>()
+				.AddTransient<UpdateTestEntityCommand>()
 				.AddTransient<CreateTestEntityCommandAsync>()
 				.AddTransient<DeleteAllTestEntitiesCommand>();
 		}
@@ -51,6 +52,7 @@ namespace NetCoreTests
 		{
 			ServiceCollection
 				.AddTransient<GetTestEntityQuery>()
+				.AddTransient<GetTestEntityByIdQuery>()
 				.AddTransient<GetTestEntityWithMessageEqualThirdQuery>()
 				.AddTransient<GetTestEntityFirstByEntityNameQuery>();
 		}

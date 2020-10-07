@@ -8,13 +8,10 @@ namespace NetCoreCQRS.Commands
     public class CommandExecutor<TCommand> : ICommandExecutor<TCommand>
     {
         readonly TCommand _command;
-        readonly DbContext _context;
-        IDbContextTransaction _transaction;
 
-        public CommandExecutor(TCommand command, DbContext context)
+        public CommandExecutor(TCommand command)
         {
             _command = command;
-            _context = context;
         }
 
         public void Process(Action<TCommand> commandAction)
@@ -30,64 +27,6 @@ namespace NetCoreCQRS.Commands
         public async Task<TResult> Process<TResult>(Func<TCommand, Task<TResult>> commandFunc)
         {
             return await commandFunc(_command);
-        }
-
-        public void ProcessWithTransaction(Action<TCommand> action)
-        {
-            try
-            {
-                using (_transaction = _context.Database.BeginTransaction())
-                {
-                    action(_command);
-                    _transaction.Commit();
-                }
-            }
-            catch (Exception ex)
-            {
-                //todo: set error log
-                _transaction.Rollback();
-                throw ex;
-            }
-        }
-
-        public TResult ProcessWithTransaction<TResult>(Func<TCommand, TResult> commandFunc)
-        {
-            try
-            {
-                TResult funcResult;
-                using (_transaction = _context.Database.BeginTransaction())
-                {
-                    funcResult = commandFunc(_command);
-                    _transaction.Commit();
-                }
-                return funcResult;
-            }
-            catch (Exception ex)
-            {
-                //todo: set error log
-                _transaction.Rollback();
-                throw ex;
-            }
-        }
-
-        public async Task<TResult> ProcessWithTransactionAsync<TResult>(Func<TCommand, Task<TResult>> commandFunc)
-        {
-            try
-            {
-                TResult funcResult;
-                using (_transaction = _context.Database.BeginTransaction())
-                {
-                    funcResult = await commandFunc(_command);
-                    _transaction.Commit();
-                }
-                return funcResult;
-            }
-            catch (Exception ex)
-            {
-                //todo: set error log
-                _transaction.Rollback();
-                throw ex;
-            }
         }
     }
 }
