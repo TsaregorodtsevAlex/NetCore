@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Linq;
+using FluentAssertions;
 using NetCoreTests.Commands;
 using NetCoreTests.DbDataAccess;
 using NetCoreTests.Queries;
@@ -31,6 +33,24 @@ namespace NetCoreTests
 			var testEntityId = await executor.GetCommand<CreateTestEntityCommandAsync>().Process(command => command.ExecuteAsync());
 
 			testEntityId.Should().BePositive();
+		}
+
+		[Test]
+		public async Task Executor_ProcessWithTransaction_CorrectProcess()
+		{
+			var executor = GetExecutor();
+
+			var testEntityId = await executor.WithTransactionAsync(async () =>
+			{
+				var id = await executor.GetCommand<CreateTestEntityCommandAsync>().Process(command => command.ExecuteAsync());
+				return id;
+			});
+
+			var testEntities = executor.GetQuery<GetTestEntityQuery>().Process(query => query.Execute());
+			var saved = testEntities.FirstOrDefault(x => x.Id == testEntityId);
+
+			testEntityId.Should().BePositive();
+			saved.Should().NotBeNull();
 		}
 
 		/* [Test]

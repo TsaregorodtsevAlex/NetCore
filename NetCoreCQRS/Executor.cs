@@ -2,6 +2,7 @@
 using NetCoreCQRS.Commands;
 using NetCoreCQRS.Queries;
 using System;
+using System.Threading.Tasks;
 
 namespace NetCoreCQRS
 {
@@ -13,6 +14,30 @@ namespace NetCoreCQRS
 		{
 			_context = context;
 			_provider = provider;
+		}
+
+		public void WithTransaction(Action action)
+		{
+			var wrapper = new TransactionWrapper(_context);
+			wrapper.ProcessTransaction(action);
+		}
+
+		public TResult WithTransaction<TResult>(Func<TResult> func)
+		{
+			var wrapper = new TransactionWrapper(_context);
+			return wrapper.ProcessTransaction(func);
+		}
+
+		public async Task<TResult> WithTransactionAsync<TResult>(Func<Task<TResult>> func)
+		{
+			var wrapper = new TransactionWrapper(_context);
+			return await wrapper.ProcessTransactionAsync(func);
+		}
+
+		public async Task WithTransactionAsync<TResult>(Func<Task> func)
+		{
+			var wrapper = new TransactionWrapper(_context);
+			await wrapper.ProcessTransactionAsync(func);
 		}
 
 		public ICommandExecutor<TCommand> GetCommand<TCommand>() where TCommand : BaseCommand
@@ -46,6 +71,30 @@ namespace NetCoreCQRS
 		{
 			_context = context;
 			_provider = provider;
+		}
+
+		public void WithTransaction(Action action)
+		{
+			var wrapper = new TransactionWrapper(_context);
+			wrapper.ProcessTransaction(action);
+		}
+
+		public TResult WithTransaction<TResult>(Func<TResult> func)
+		{
+			var wrapper = new TransactionWrapper(_context);
+			return wrapper.ProcessTransaction(func);
+		}
+
+		public async Task<TResult> WithTransactionAsync<TResult>(Func<Task<TResult>> func)
+		{
+			var wrapper = new TransactionWrapper(_context);
+			return await wrapper.ProcessTransactionAsync(func);
+		}
+
+		public async Task WithTransactionAsync<TResult>(Func<Task> func)
+		{
+			var wrapper = new TransactionWrapper(_context);
+			await wrapper.ProcessTransactionAsync(func);
 		}
 
 		public ICommandExecutor<TCommand> GetCommand<TCommand>() where TCommand : BaseCommand<TContext>
