@@ -10,6 +10,10 @@ namespace NetCoreCQRS
 	{
 		readonly DbContext _context;
 		readonly IServiceProvider _provider;
+
+		//TODO: вызвать событие когда надо
+		private event Action _postBackEvent;
+
 		public Executor(DbContext context, IServiceProvider provider)
 		{
 			_context = context;
@@ -44,6 +48,12 @@ namespace NetCoreCQRS
 		{
 			var command = (TCommand)_provider.GetService(typeof(TCommand));
 			command.SetContext(_context);
+			
+			// Подписка на событие
+			if (command.PostBack != null)
+			{
+				_postBackEvent += command.PostBack;
+			}
 
 			return new CommandExecutor<TCommand>(command);
 		}

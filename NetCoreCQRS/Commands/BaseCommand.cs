@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using NetCoreDataAccess.Repository;
 using System.Threading.Tasks;
 
@@ -7,6 +8,12 @@ namespace NetCoreCQRS.Commands
 	public class BaseCommand
 	{
 		DbContext Context;
+
+		/// <summary>
+		/// Вызывается после выполнения команди или транзакции
+		/// </summary>
+		public Action PostBack { get; protected set; }
+
 		public void SetContext(DbContext dbContext)
 		{
 			Context = dbContext;
