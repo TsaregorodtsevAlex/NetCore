@@ -12,7 +12,7 @@ namespace NetCoreCQRS.Commands
 		/// <summary>
 		/// Вызывается после выполнения команди или транзакции
 		/// </summary>
-		public Action PostBack { get; protected set; }
+		public Action SuccessAction { get; protected set; }
 
 		public void SetContext(DbContext dbContext)
 		{
