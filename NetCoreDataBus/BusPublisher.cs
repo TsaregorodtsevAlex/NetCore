@@ -18,9 +18,9 @@ namespace NetCoreDataBus
 		{
 			try
 			{
-				Log.Information("Starting publishing the event {EventName} via publisher {Publisher}", typeof(T).Name, nameof(BusPublisher));
+				Log.Debug("Starting publishing the event {EventName} via publisher {Publisher}", typeof(T).Name, nameof(BusPublisher));
 				_bus.Publish(message);
-				Log.Information("Ending publishing the event {EventName} via publisher {Publisher}", typeof(T).Name, nameof(BusPublisher));
+				Log.Debug("Ending publishing the event {EventName} via publisher {Publisher}", typeof(T).Name, nameof(BusPublisher));
 			}
 			catch (Exception ex)
 			{
@@ -34,9 +34,9 @@ namespace NetCoreDataBus
 		{
 			try
 			{
-				Log.Information("Starting async publishing the event {EventName} via publisher {Publisher}", typeof(T).Name, nameof(BusPublisher));
+				Log.Debug("Starting async publishing the event {EventName} via publisher {Publisher}", typeof(T).Name, nameof(BusPublisher));
 				await _bus.Publish(message);
-				Log.Information("Ending async publishing the event {EventName} via publisher {Publisher}", typeof(T).Name, nameof(BusPublisher));
+				Log.Debug("Ending async publishing the event {EventName} via publisher {Publisher}", typeof(T).Name, nameof(BusPublisher));
 			}
 			catch (Exception ex)
 			{
